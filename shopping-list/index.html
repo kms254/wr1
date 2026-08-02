@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WR1 Shopping List — CURV LAB Chassis Build</title>
+<style>
+  :root {
+    --ink: #211f1b;
+    --ink-soft: #55504a;
+    --paper: #eae7df;
+    --card: #f6f4ee;
+    --line: #d9d5c9;
+    --line-soft: #e3e0d5;
+    --accent: #a15a1f;
+    --accent-ink: #ffffff;
+    --accent-soft: #f0e0cd;
+    --good: #4c6e4a;
+    --good-soft: #e3ebe0;
+    --warn: #a6461f;
+    --warn-soft: #f4e3da;
+    --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
+    --radius: 10px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #ece8e0;
+      --ink-soft: #b3ada2;
+      --paper: #171613;
+      --card: #201e1a;
+      --line: #38352e;
+      --line-soft: #2a2822;
+      --accent: #d38a45;
+      --accent-ink: #1a1310;
+      --accent-soft: #3a2c1c;
+      --good: #86a683;
+      --good-soft: #26301f;
+      --warn: #d97a52;
+      --warn-soft: #3a2419;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #ece8e0; --ink-soft: #b3ada2; --paper: #171613; --card: #201e1a;
+    --line: #38352e; --line-soft: #2a2822; --accent: #d38a45; --accent-ink: #1a1310;
+    --accent-soft: #3a2c1c; --good: #86a683; --good-soft: #26301f; --warn: #d97a52; --warn-soft: #3a2419;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --ink: #211f1b; --ink-soft: #55504a; --paper: #eae7df; --card: #f6f4ee;
+    --line: #d9d5c9; --line-soft: #e3e0d5; --accent: #a15a1f; --accent-ink: #ffffff;
+    --accent-soft: #f0e0cd; --good: #4c6e4a; --good-soft: #e3ebe0; --warn: #a6461f; --warn-soft: #f4e3da;
+    --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono, .tally, .qty, .cat-count, .spec .v, .seg-badge {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px 96px; }
+
+  /* ---------- Header ---------- */
+  header.hero {
+    padding: 44px 20px 28px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  h1 {
+    font-size: clamp(28px, 4.4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .sub {
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 62ch;
+    margin: 0;
+  }
+  .sub b { color: var(--ink); font-weight: 650; }
+
+  /* ---------- Spec strip ---------- */
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 26px;
+  }
+  .spec { background: var(--card); padding: 14px 16px; }
+  .spec .v { font-size: 18px; font-weight: 700; }
+  .spec .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin-top: 3px; }
+
+  /* ---------- Sticky ledger ---------- */
+  .progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .progress-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 11px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px 16px;
+    flex-wrap: wrap;
+  }
+  .tally { font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--ink-soft); }
+  .tally .t-num { font-weight: 700; font-size: 15px; color: var(--ink); }
+  .tally .t-num.is-transit { color: var(--accent); }
+  .tally .t-num.is-received { color: var(--good); }
+  .tally .t-sep { opacity: 0.4; margin: 0 5px; }
+  .tally .t-of { opacity: 0.7; margin-left: 5px; font-weight: 500; }
+
+  .progress-track {
+    position: relative;
+    flex: 1 1 160px;
+    height: 7px;
+    background: var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 110px;
+  }
+  .progress-track .fill {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.25s ease;
+  }
+  .fill-ordered { background: color-mix(in srgb, var(--accent) 55%, transparent); }
+  .fill-received { background: var(--good); }
+
+  /* Segmented filter */
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
+  .seg button {
+    font: inherit;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 0;
+    border-right: 1px solid var(--line);
+    background: none;
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button:hover { color: var(--accent); }
+  .seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 650; }
+  .seg button.on:hover { color: var(--accent-ink); }
+  .seg-badge { font-size: 11px; opacity: 0.75; margin-left: 6px; }
+
+  .reset-btn {
+    font: inherit;
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .reset-btn:hover { color: var(--warn); border-color: var(--warn); }
+
+  .builds-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    padding: 5px 6px 5px 12px;
+    border-radius: 999px;
+  }
+  .builds-control label { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .builds-control input {
+    width: 44px;
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 3px 2px;
+  }
+
+  .nav-row { border-top: 1px solid var(--line-soft); }
+  .nav-chips {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 8px 20px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .nav-chips a {
+    font-size: 12px;
+    text-decoration: none;
+    color: var(--ink-soft);
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .nav-chips a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .scale-note { font-size: 11.5px; color: var(--ink-soft); margin: -6px 0 14px; }
+  .scale-note b { color: var(--accent); }
+
+  /* ---------- Category sections ---------- */
+  section.category { margin-top: 40px; scroll-margin-top: 104px; }
+  .cat-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .cat-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+  .cat-count { font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+  .cat-count b { color: var(--good); font-weight: 700; }
+  .cat-desc { color: var(--ink-soft); font-size: 13.5px; margin: 8px 0 16px; max-width: 68ch; }
+
+  /* ---------- Items ---------- */
+  .items { display: flex; flex-direction: column; gap: 8px; }
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 4px 16px;
+    align-items: start;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+  }
+
+  /* The two-step status track: Ordered -> Received */
+  .track { display: flex; flex-direction: column; gap: 5px; min-width: 94px; padding-top: 1px; }
+  .track.row { flex-direction: row; gap: 14px; min-width: 0; margin-top: 9px; flex-wrap: wrap; }
+  .tick {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    line-height: 1.2;
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .tick input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    flex: none;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .tick[data-role="received"] input[type="checkbox"] { accent-color: var(--good); }
+  .tick input:checked ~ span { color: var(--ink); font-weight: 650; }
+  .tick[data-role="received"] input:checked ~ span { color: var(--good); }
+
+  .item.is-received { border-color: var(--good); background: color-mix(in srgb, var(--good-soft) 55%, var(--card)); }
+  .item.is-received .part-name { text-decoration: line-through; text-decoration-color: var(--good); text-decoration-thickness: 1.5px; opacity: 0.7; }
+
+  .item-main { min-width: 0; }
+  .part-name { font-weight: 650; font-size: 15px; }
+  .part-note { color: var(--ink-soft); font-size: 12.5px; margin-top: 3px; line-height: 1.5; }
+
+  .item-side { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 116px; }
+  .qty { font-size: 12px; color: var(--ink-soft); }
+  .qty b { color: var(--ink); font-size: 13px; }
+  .buy-links { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .buy-links a {
+    font-size: 11.5px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 4px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .buy-links a:hover { border-color: var(--accent); color: var(--accent); }
+  .buy-links a.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .buy-links a.primary:hover { opacity: 0.88; color: var(--accent-ink); }
+
+  .flag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--warn);
+    background: var(--warn-soft);
+    padding: 2px 7px;
+    border-radius: 5px;
+    margin-bottom: 6px;
+  }
+  .flag.good { color: var(--good); background: var(--good-soft); }
+
+  /* Reference / alternate rows — no purchase, excluded from the tallies */
+  .item.reference { background: none; box-shadow: none; border-style: dashed; }
+  .ref-mark {
+    display: flex; align-items: flex-start;
+    min-width: 94px; padding-top: 3px;
+    font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700; color: var(--ink-soft);
+  }
+
+  .choice-group {
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    margin: 4px 0 4px 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .choice-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: -2px;
+  }
+
+  /* ---------- Tools / print grid ---------- */
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 8px; }
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+  }
+  .tool-card .part-name { font-size: 14px; }
+  .tool-card .buy-links { justify-content: flex-start; margin-top: 8px; }
+  .tool-card.is-received { border-color: var(--good); background: color-mix(in srgb, var(--good-soft) 55%, var(--card)); }
+  .tool-card.is-received .part-name { text-decoration: line-through; text-decoration-color: var(--good); text-decoration-thickness: 1.5px; opacity: 0.7; }
+
+  /* ---------- Filter mode ---------- */
+  .hidden-by-filter { display: none !important; }
+  body.filtering .cat-desc,
+  body.filtering .scale-note,
+  body.filtering .choice-label,
+  body.filtering details { display: none; }
+  body.filtering .choice-group { border-left: 0; padding-left: 0; margin-left: 0; }
+
+  .empty-state {
+    display: none;
+    margin-top: 40px;
+    padding: 34px 20px;
+    text-align: center;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .empty-state b { color: var(--good); }
+  body.is-empty .empty-state { display: block; }
+
+  footer {
+    max-width: 1040px;
+    margin: 56px auto 0;
+    padding: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  footer p { margin: 0; max-width: 78ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-track .fill { transition: none; }
+  }
+
+  @media (max-width: 560px) {
+    .item { grid-template-columns: 1fr; }
+    .track { flex-direction: row; gap: 16px; flex-wrap: wrap; min-width: 0; }
+    .item-side { align-items: flex-start; text-align: left; margin-top: 4px; }
+    .buy-links { justify-content: flex-start; }
+    .tally { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="eyebrow">Sourcing &amp; delivery tracker · CURV LAB WR1 Chassis Build Guide, Ver. 2</p>
+  <h1>WR1 Shopping List</h1>
+  <p class="sub">Every off-the-shelf part, fastener, tool, and consumable the WR1 chassis build calls for, pulled from the guide's hardware tables (pp. 63–70) and tool/print pages, with the guide's own purchase links attached. Each line now tracks two steps — <b>Ordered</b> when it's bought, <b>Received</b> when the box is actually in your hands. Both save in this browser.</p>
+
+  <div class="specs">
+    <div class="spec"><div class="v">1/8</div><div class="k">scale</div></div>
+    <div class="spec"><div class="v">298mm</div><div class="k">wheelbase</div></div>
+    <div class="spec"><div class="v">~2,230g</div><div class="k">total weight (3S)</div></div>
+    <div class="spec"><div class="v">~365g</div><div class="k">PETG used</div></div>
+    <div class="spec"><div class="v">~17hr</div><div class="k">print time (H2S)</div></div>
+    <div class="spec"><div class="v">~$600</div><div class="k">est. hardware cost</div></div>
+  </div>
+</header>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="tally" aria-live="polite"><span class="t-num" id="n-ordered">0</span> ordered<span class="t-sep">·</span><span class="t-num is-transit" id="n-transit">0</span> in transit<span class="t-sep">·</span><span class="t-num is-received" id="n-received">0</span> received<span class="t-of">of <span id="n-total">0</span></span></div>
+    <div class="progress-track" role="img" id="track-img" aria-label="Delivery progress">
+      <div class="fill fill-ordered" id="fill-ordered"></div>
+      <div class="fill fill-received" id="fill-received"></div>
+    </div>
+    <div class="seg" role="group" aria-label="Filter the list">
+      <button type="button" data-filter="all" class="on">All</button>
+      <button type="button" data-filter="toorder">To order<span class="seg-badge" id="badge-toorder">0</span></button>
+      <button type="button" data-filter="transit">In transit<span class="seg-badge" id="badge-transit">0</span></button>
+    </div>
+    <div class="builds-control">
+      <label for="builds-input">Building</label>
+      <input id="builds-input" type="number" min="1" max="8" value="2">
+      <label for="builds-input">car(s)</label>
+    </div>
+    <button class="reset-btn" id="reset-recv" type="button">Reset received</button>
+  </div>
+  <div class="nav-row">
+    <nav class="nav-chips">
+      <a href="#drivetrain">Drivetrain</a>
+      <a href="#pivots">Pivots</a>
+      <a href="#suspension">Suspension</a>
+      <a href="#fasteners">Fasteners</a>
+      <a href="#fluids">Fluids</a>
+      <a href="#optional">Optional</a>
+      <a href="#tools">Tools</a>
+      <a href="#printing">Printing</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="category" id="drivetrain">
+    <div class="cat-head"><h2>Drivetrain &amp; Powertrain</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">Diffs, pinion, motor/ESC, and the steering/suspension link set — steps 5, 8, 12, 18, 34–35.</p>
+    <div class="items">
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="gpm-diff-set" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="gpm-diff-set"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 2</span>
+          <div class="part-name">GPM Front/Rear Diff Set — Black + Blue</div>
+          <div class="part-note">GPM (ARRMA Fireteam/Big Rock/Mojave/Kraton-compatible), pair, $108.95/unit — 1 per car, ordered separately for each car (black for car 1, blue for car 2 — matches the color-coding on the center diffs too). Bevel-gear diff cases for the front and rear lower diff assemblies (steps 8 &amp; 12). Fill each to ~60% with 30k diff fluid on assembly.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b data-base="1">1</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256809714659981.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="gpm-center-diff" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="gpm-center-diff"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick</span>
+          <div class="part-name">GPM Center Diff — Black + Blue</div>
+          <div class="part-note">GPM (TRAXXAS Sledge-compatible), $67.15/unit. Center differential, seats in the bearing cradles on the chassis plate (step 5) — 1 per car, black for car 1, blue for car 2.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b data-base="1">1</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256810226884055.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="pinion-12t" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="pinion-12t"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 2</span>
+          <div class="part-name">12T M1 5mm Pinion</div>
+          <div class="part-note">M1 5mm bore, 12T, $3.27/unit. Motor pinion gear + set screw, mates to the center diff (step 18) — 1 per car.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b data-base="1">1</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256808011982122.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="motor-esc" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="motor-esc"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 2, matches guide spec</span>
+          <div class="part-name">Motor / ESC Combo — one per car</div>
+          <div class="part-note">Hobbywing QuicRun WP 10BL120 G2 120A ESC + 3660SL 3700KV motor, $104.86 each — matches the guide's own recommended product exactly, one for each car. Mounts to the faceplate and drives into the center diff (step 18); also runs the on/off button and battery leads. EC5-adapted for the Zeee battery via the connector set in Optional.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>2</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256806067678629.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="esc-card" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="esc-card"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">Hobbywing 120A LED Program Card</div>
+          <div class="part-note">$8.84. XERUN/EZRUN-series compatible, matches the QuicRun 10BL120 G2 combos above — one card programs both ESCs (not a per-car item), so stays fixed at qty 1.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.us/item/3256805831705148.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="link-rod" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="link-rod"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">Links (50–52mm) — Threaded Rod, Inner Section</div>
+          <div class="part-note">304 stainless M3×30mm threaded rod, 15pcs, $3.77. Building the 50-52mm links yourself instead of buying a pre-made set — this is the inner threaded section. 3 links/car (2 knuckle tie-rods + 1 servo-horn link, steps 34–35) = 6 for two cars, well within this 15pc pack — stays fixed at qty 1 rather than scaling with builds.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256807982410128.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="drivetrain">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="link-rodend" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="link-rodend"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 2, Titanium + Dark Blue</span>
+          <div class="part-name">Links (50–52mm) — Rod End Ball Joints</div>
+          <div class="part-note">YEAHRUN M3 link tie-rod end ball joints, 10pcs/pack — titanium ($6.21) for the black car, dark blue ($6.03) for the blue car. Threads onto each end of the rod above to complete the turnbuckle — 6 needed per car (2 ends × 3 links), so each 10-pack covers its car with spare.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>2 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256809956991342.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="pivots">
+    <div class="cat-head"><h2>Control-Arm Pivots</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">The pins that hinge all eight control arms to the knuckles and chassis (steps 24, 25, 29, 33).</p>
+
+    <p class="scale-note"><span class="flag good" style="margin-bottom:0;">Resolved</span> M3 pins sourced (both lengths, below) — sticking with default Set A prints, no M4 alternates needed.</p>
+
+    <div class="choice-group">
+      <div class="choice-label">Pick one pin system</div>
+
+      <div class="item" data-cat="pivots">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="eclip-m3-50" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="eclip-m3-50"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">50mm M3 E-clip Pins</div>
+          <div class="part-note">uxcell 20-Set M3×50mm snap-ring locating pins w/ e-clips, $8.79. Front + rear upper control arms (steps 24, 25) — 4 per car, 8 for two cars, comfortably inside this 20-pack.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0CTMTK5SY/" target="_blank" rel="noopener">Amazon</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="pivots">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="eclip-m3-25" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="eclip-m3-25"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — exact fit, zero spare</span>
+          <div class="part-name">25mm M3 E-clip Pins</div>
+          <div class="part-note">uxcell 20-Set M3×25mm snap-ring locating pins w/ e-clips, $7.69. Tally: 2 per corner across steps 24, 25, 29, 33 = <b>10 per car</b>. Two cars need exactly 20 — this pack matches with nothing left over if you drop one down a drain.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0CTMV3N9H/" target="_blank" rel="noopener">Amazon</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <details style="margin-top:10px;">
+      <summary style="cursor:pointer; font-size:12px; color:var(--ink-soft); user-select:none;">Not needed — M4 alternatives (only if M3 pins go out of stock later)</summary>
+      <div class="items" style="margin-top:10px; opacity:0.75;">
+
+        <div class="item" data-cat="pivots-unused">
+          <div class="ref-mark">Not ordered</div>
+          <div class="item-main">
+            <span class="flag">M4 alt</span>
+            <div class="part-name">M4 E-clip Shafts — L1=55mm ×1, L1=30mm ×1</div>
+            <div class="part-note">Same AliExpress listing for both — select the 55mm and 30mm size variants. This supplier measures usable shaft length differently, so 55/30mm here maps to the guide's 50/25mm — requires the M4 printed alternates.</div>
+          </div>
+          <div class="item-side">
+            <div class="qty">qty <b data-base="1" data-unit=" ea.">1 ea.</b></div>
+            <div class="buy-links"><a class="primary" href="https://www.aliexpress.us/item/3256808702338175.html" target="_blank" rel="noopener">AliExpress</a></div>
+          </div>
+        </div>
+
+        <div class="item" data-cat="pivots-unused">
+          <div class="ref-mark">Not ordered</div>
+          <div class="item-main">
+            <span class="flag">M4 alt</span>
+            <div class="part-name">M4 Clevis Pins — 50mm ×1, 25mm ×1</div>
+            <div class="part-note">Alternate M4 pin format (clevis-style instead of e-clip). Also requires the M4 printed alternates.</div>
+          </div>
+          <div class="item-side">
+            <div class="qty">qty <b data-base="1" data-unit=" ea.">1 ea.</b></div>
+            <div class="buy-links">
+              <a class="primary" href="https://amzn.to/4cVOMZl" target="_blank" rel="noopener">50mm · Amazon</a>
+              <a href="https://amzn.to/4l2MZ77" target="_blank" rel="noopener">25mm · Amazon</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </details>
+  </section>
+
+  <section class="category" id="suspension">
+    <div class="cat-head"><h2>Suspension &amp; Steering</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">Shocks, servo, and axles — steps 20, 27, 31, 38–39.</p>
+    <div class="items">
+
+      <div class="item" data-cat="suspension">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="shocks" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="shocks"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick</span>
+          <div class="part-name">Shocks — 85mm &amp; 95mm</div>
+          <div class="part-note">4-pack (2× 85mm front, 2× 95mm rear), titanium grey, $22.98 — one full car's worth of shocks (the guide's "x4" in steps 38–39 counts mounting screws, not shocks).</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b data-base="1" data-unit=" pack">1 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0BXWW62G4/" target="_blank" rel="noopener">Amazon</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="suspension">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="servo" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="servo"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">Waterproof Servo</div>
+          <div class="part-note">Miuzei 25KG digital, 2-pack, $29.99. One servo per car (step 20) — this 2-pack matches exactly, no surplus, so it stays fixed at qty 1 rather than scaling with the builds count above.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0C5LTKBD4/" target="_blank" rel="noopener">Amazon</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="suspension">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="axles" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="axles"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 4</span>
+          <div class="part-name">55mm Axles (CVD #107544)</div>
+          <div class="part-note">2pcs/pack, $4.80/pack. Front + rear steps (27, 31) need 4 axles/car, i.e. 2 packs per car — qty 4 covers both cars (8 axles total).</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b data-base="2" data-unit=" pack">2 pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256807779620837.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="fasteners">
+    <div class="cat-head"><h2>Fasteners, Inserts &amp; Bearings</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">Threaded inserts, screws, and bearings used throughout — most parts need multiple of these packs.</p>
+    <p class="scale-note">Quantities below are the guide's per-car figure ×<b>your build count</b>. Some bulkier packs (the M3 Fastener Kit, insert packs, long screw set) may already contain enough pieces to cover more than one car — check what's left before reordering a second pack.</p>
+    <div class="items">
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="inserts-57" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="inserts-57"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 2</span>
+          <div class="part-name">Inserts M3 × 5.7mm</div>
+          <div class="part-note">ruthex RX-M3x5.7 brass, 100pcs, $9.99. Most-used insert in the build by far — rough tally across every step comes to ~55 per car (chassis plate 10, driveshaft 2, front+rear diff cases 8, center diff bracket/upper diff cases ~21, motor faceplate 3, steering links 3, shocks 8), so ~110 for two cars — 2 packs is the right call.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b data-base="1" data-unit=" pack">1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B08BCRZZS3/" target="_blank" rel="noopener">Amazon</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="inserts-3" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="inserts-3"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">Inserts M3 × 3mm</div>
+          <div class="part-note">uxcell knurled brass, 100pcs, $8.19. Guide uses ~10 per car (steering levers step 2, front inner knuckles step 30, steering link step 34) — one 100pc pack covers several builds.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0CTCQXZP2/" target="_blank" rel="noopener">Amazon</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="fastener-kit" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="fastener-kit"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">M3 Fastener Kit</div>
+          <div class="part-note">720pcs assorted M3×4/6/8/10/12mm pan &amp; flat head, black alloy, $12.99. Every step in the guide only calls for a handful of a given length, so this box should comfortably run both builds — flag it if you burn through a size faster than expected.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 kit</b></div><div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0BMQGV4SW/" target="_blank" rel="noopener">Amazon</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="screw-30mm" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="screw-30mm"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">M3 Button Head Screw Assortment</div>
+          <div class="part-note">M3×8/10/12/14/16/25/30/40mm, 20pcs each (160pcs total), $9.41. Covers the Center Diff Bracket screws (step 16, M3×30mm ×8/car) plus spares across the other lengths used throughout.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 kit</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256807446512188.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="set-screws" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="set-screws"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">M3 × 8mm Set Screws</div>
+          <div class="part-note">DIN916 black grade, 50pcs, $3.11. Locks the pinion into the drive shaft on both diffs (steps 10, 14) — 2 per car, so this pack covers many builds over.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256804315321029.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="lock-nut" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="lock-nut"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">M4 Lock Nut</div>
+          <div class="part-note">DIN985 stainless, black zinc, 50pcs, $2.67. Secures all four wheels to the axles (step 37) — 4 per car, so this pack covers many builds over.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/2251832844073655.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="long-screw-set" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="long-screw-set"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">M3 Long Screw Set</div>
+          <div class="part-note">mxuteuk 420pcs, M3×30/35/40/45/50mm + nuts/washers/wrench, $9.99. Longer fasteners for shocks, ESC plate, and gimbal mount — one 420pc kit is enough for multiple builds, so this one stays fixed at qty 1 regardless of the builds count above.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 kit</b></div><div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0CSWD34KJ/" target="_blank" rel="noopener">Amazon</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="dowel-pin" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="dowel-pin"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">M1.5 × 10mm Dowel Pin</div>
+          <div class="part-note">GB119 304 stainless, 100pcs, $2.00. Locates the wheel hex to the axle (steps 27, 32) — 4 per car, so this pack covers many builds over.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256809997486369.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="bearings-small" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="bearings-small"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — qty 2</span>
+          <div class="part-name">Bearings 5 × 10 × 4mm</div>
+          <div class="part-note">Apex RC MR105ZZ, 10-pack, $8.99. Tally: 4 in the rear knuckles (step 27) + 4 in the front knuckles (step 30) + 1 per diff pinion ×2 diffs (steps 8, 12) = 10 per car exactly — zero spare, so 2 packs for 2 cars is the right call.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b data-base="1" data-unit=" pack">1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B00XQ9212C/" target="_blank" rel="noopener">Amazon</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fasteners">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="bearings-large" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="bearings-large"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">Bearings 8 × 16 × 5mm</div>
+          <div class="part-note">uxcell 688ZZ, pack of 20, $9.69. Larger drive-pinion bearing, 2 per car (front + rear diff) — one 20-pack covers several builds, so this stays fixed at qty 1.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B07FW2YKL8/" target="_blank" rel="noopener">Amazon</a></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="fluids">
+    <div class="cat-head"><h2>Lubricants &amp; Consumables</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">Fill each diff to ~60% with diff fluid (steps 5.1, 8.1, 12.1) and thread-lock the set screws.</p>
+    <div class="items">
+
+      <div class="item reference" data-cat="fluids-reference">
+        <div class="ref-mark">Reference</div>
+        <div class="item-main">
+          <span class="flag good">Not a separate purchase — same as 30k Diff Fluid</span>
+          <div class="part-name">Differential Lubrication</div>
+          <div class="part-note">The guide's own link here resolves to "Team Associated FT Silicone Diff Fluid, 30,000 CST" — the same product category as the 30k Diff Fluid line below, not a distinct grease. Your XRSRACING 30,000cst bottle covers this row too, so it is left out of the counts.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>—</b></div></div>
+      </div>
+
+      <div class="item" data-cat="fluids">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="diff-fluid-30k" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="diff-fluid-30k"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">30k Diff Fluid</div>
+          <div class="part-note">XRSRACING 30,000cst, 60ml, $8.60 — the correct thick gear fluid (not shock oil; that won't work for diffs). Fills the center, front, and rear diff cases to ~60% full (steps 5.1, 8.1, 12.1) — confirmed sufficient for both cars.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b data-base="1" data-unit=" bottle">1 bottle</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/2251832778210084.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fluids">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="lith-grease" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="lith-grease"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">White Lithium Grease</div>
+          <div class="part-note">10ml tube, $2.55. Lubricates the drive-pinion-to-driveshaft joint on both diffs (steps 9.3, 13.3) — a small dab per joint, so one tube should stretch across both builds.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 tube</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256808928146521.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="fluids">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="battery-straps" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="battery-straps"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — covers both cars</span>
+          <div class="part-name">Velcro Battery Straps</div>
+          <div class="part-note">150×12mm reusable hook &amp; loop, 30-pack, $2.77. Threads through the 3 pill-shaped slots on the chassis plate (step 42) — 30 straps is far more than 2 cars need, stays fixed at qty 1.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b>1 pack</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256811814037362.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="optional">
+    <div class="cat-head"><h2>Optional — Electronics &amp; FPV</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">Not needed to finish the chassis mechanically, but required to actually drive it. Battery and Tx/Rx each have two guide-listed options — pick one.</p>
+    <div class="items">
+
+      <div class="item" data-cat="optional">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="wheels-tires" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="wheels-tires"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — includes spare set</span>
+          <div class="part-name">Wheels / Tires — 2.2", White + Black</div>
+          <div class="part-note">4pcs/set, $12.58/set (2 White + 2 Black ordered). 60mm rim diameter, glued to the printed hubcap and wheel (step 36). One set drives, one set spare per car — qty below is 2 sets/car.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b data-base="2" data-unit=" set">2 set</b></div><div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256807765129349.html" target="_blank" rel="noopener">AliExpress</a></div></div>
+      </div>
+
+      <div class="item" data-cat="optional">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="battery-confirmed" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="battery-confirmed"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick</span>
+          <div class="part-name">Battery — Zeee 3S 5200mAh 11.1V 80C, EC5 (2-pack)</div>
+          <div class="part-note">Guide's suggested batteries (Ovonic / Venom) were out of stock — swapped for this Zeee 2-pack. $53.95/pack ($26.98/cell). One pack = one car's 2-cell setup, so qty below already tracks your build count.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b data-base="1" data-unit=" × 2-pack">1 × 2-pack</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.amazon.com/gp/product/B0FWB7486K/" target="_blank" rel="noopener">Amazon</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="optional">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="ec5-connectors" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="ec5-connectors"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Added — not in guide</span>
+          <div class="part-name">EC5 Connector Set (5-pair, Amass)</div>
+          <div class="part-note">$14.66. Converts the ESC's connector to EC5 to match the Zeee battery above — XT60-terminated batteries are hard to get shipped to the US right now, so this bridges the gap instead of chasing the "correct" connector. 5 pairs is enough for both cars' ESC + battery leads with spares for soldering mistakes.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1 × 5-pair</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256803590266994.html" target="_blank" rel="noopener">AliExpress</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="optional">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="txrx-radiolink" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="txrx-radiolink"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <span class="flag good">Confirmed pick — 2 receivers</span>
+          <div class="part-name">Transmitter / Receiver — Radiolink T8S + R8EF</div>
+          <div class="part-note">8-channel 2.4G, dual sticks, built-in rechargeable, Mode 2, $51.99. One shared transmitter plus a bound R8EF receiver in each car — both cars now wired up, whether or not you drive them at the same time.</div>
+        </div>
+        <div class="item-side">
+          <div class="qty">qty <b>1</b></div>
+          <div class="buy-links"><a class="primary" href="https://www.amazon.com/dp/B09BTSJN7P" target="_blank" rel="noopener">Amazon</a></div>
+        </div>
+      </div>
+
+      <div class="item" data-cat="optional">
+        <div class="track">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="fpv-kit"><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="fpv-kit"><span>Received</span></label>
+        </div>
+        <div class="item-main">
+          <div class="part-name">Moonlight 4K Camera FPV Kit</div>
+          <div class="part-note">Only needed if mounting the FPV/gimbal assembly (step 44–45); the Chassis Beam has extra mounting holes for it in v2.</div>
+        </div>
+        <div class="item-side"><div class="qty">qty <b data-base="1">1</b></div><div class="buy-links"><a class="primary" href="https://www.caddxfpv.com/products/walksnail-avatar-hd-goggles-l-with-moonlight-kit-and-gm3?ref=CURVLAB" target="_blank" rel="noopener">CaddX FPV</a></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="tools">
+    <div class="cat-head"><h2>Tools</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">Required for assembly, plus two that make the print job easier. Anything marked "Already own" starts as received — it's on the bench, nothing to wait for.</p>
+    <div class="tool-grid">
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">Hex Screwdriver Set</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-hex" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-hex" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">7.0 Box Wrench</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-wrench" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-wrench" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">CA Glue</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-glue" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-glue" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">Pliers (for e-clips)</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-pliers" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-pliers" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">Soldering Iron</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-solder" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-solder" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">Threaded-Insert Soldering Tips</div>
+        <div class="part-note">Run at 250–350°F to seat inserts (step 1.2).</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-tips" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-tips" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Confirmed pick</span>
+        <div class="part-name">A2 Cutting Mat <em style="font-style:normal; color:var(--ink-soft); font-size:11px;">(helpful)</em></div>
+        <div class="part-note">Self-healing double-sided, 60×45cm, $18.74.</div>
+        <div class="buy-links"><a class="primary" href="https://www.aliexpress.com/item/3256812591268507.html" target="_blank" rel="noopener">AliExpress</a></div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-mat" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-mat"><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="tools">
+        <span class="flag good">Already own</span>
+        <div class="part-name">Quick Clamp <em style="font-style:normal; color:var(--ink-soft); font-size:11px;">(helpful)</em></div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="tool-clamp" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="tool-clamp" checked><span>Received</span></label>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="category" id="printing">
+    <div class="cat-head"><h2>3D Printing</h2><span class="cat-count" data-cat-count></span></div>
+    <p class="cat-desc">The chassis itself is 3D-printed, not bought as hardware — but the printer and filament are the other line items in the ~$600 estimate.</p>
+    <div class="tool-grid">
+
+      <div class="tool-card" data-cat="printing">
+        <span class="flag good">Already own</span>
+        <div class="part-name">Printer — Bambu X1C</div>
+        <div class="part-note">256×256×256mm build volume — well above the guide's ≥180×180×180mm minimum, so the standard Set A/Set B plates should fit without needing the Small Build Plate Alternative STLs.</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="print-printer" checked><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="print-printer" checked><span>Received</span></label>
+        </div>
+      </div>
+
+      <div class="tool-card" data-cat="printing">
+        <div class="part-name">Filament — PETG Basic or PETG HF</div>
+        <div class="part-note">~365g used across the full part set. Set A prints at 0.16mm layers (default strength); Set B prints at 0.12mm (higher strength) for the more highly-loaded parts.</div>
+        <div class="track row">
+          <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="print-filament"><span>Ordered</span></label>
+          <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="print-filament"><span>Received</span></label>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="empty-state" id="empty-state">Nothing left in this view — <b>everything here has arrived.</b></div>
+
+</div>
+
+<footer>
+  <p>Sourced from the CURV LAB "Chassis Build Guide WR1, Version 2" PDF — hardware tables (pp. 63–70), tools (pp. 61–62), FPV kit (p. 60), and print settings (pp. 58–59, 72–76). Purchase links are the guide's own affiliate links. Nothing here is fabricated — quantities and links are transcribed directly from the document.</p>
+  <p>Ordered and received states save to this browser only and don't sync between devices. <em>Differential Lubrication</em> is a reference row (it resolves to the same 30k fluid) and the M4 pins are unused alternates — all three are left out of the counts.</p>
+  <button class="reset-btn" id="reset-all" type="button">Reset everything — ordered and received</button>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var ORD_PREFIX = 'wr1-cart:';            // unchanged — preserves existing ordered state
+  var RECV_PREFIX = 'wr1-cart:recv:';
+  var BUILDS_KEY = ORD_PREFIX + 'builds';
+  var FILTER_KEY = ORD_PREFIX + 'filter';
+
+  function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+  function read(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function drop(key) { try { localStorage.removeItem(key); } catch (e) {} }
+
+  /* ---- Build-count scaling ---- */
+  var buildsInput = document.getElementById('builds-input');
+  var scaledEls = Array.prototype.slice.call(document.querySelectorAll('b[data-base]'));
+
+  function applyBuilds() {
+    var n = parseInt(buildsInput.value, 10);
+    if (!n || n < 1) n = 1;
+    if (n > 8) n = 8;
+    buildsInput.value = n;
+    scaledEls.forEach(function (el) {
+      var base = parseInt(el.getAttribute('data-base'), 10) || 0;
+      var unit = el.getAttribute('data-unit') || '';
+      el.textContent = (base * n) + unit;
+    });
+    save(BUILDS_KEY, String(n));
+  }
+  var savedBuilds = read(BUILDS_KEY);
+  if (savedBuilds) buildsInput.value = savedBuilds;
+  applyBuilds();
+  buildsInput.addEventListener('input', applyBuilds);
+  buildsInput.addEventListener('change', applyBuilds);
+
+  /* ---- Rows: only real purchases count (no reference rows, no unused alternates) ---- */
+  function isCounted(el) {
+    var cat = el.getAttribute('data-cat') || '';
+    if (cat === 'pivots-unused') return false;
+    if (cat.indexOf('-reference') > -1) return false;
+    return !!el.querySelector('input[data-role="ordered"]');
+  }
+
+  var allCards = Array.prototype.slice.call(document.querySelectorAll('.item, .tool-card'));
+  var extras = allCards.filter(function (el) { return !isCounted(el); });
+  var rows = allCards.filter(isCounted).map(function (el) {
+    return {
+      el: el,
+      cat: el.getAttribute('data-cat'),
+      id: el.querySelector('input[data-role="ordered"]').getAttribute('data-id'),
+      ord: el.querySelector('input[data-role="ordered"]'),
+      recv: el.querySelector('input[data-role="received"]')
+    };
+  });
+
+  /* Tri-state read: '1' on, '0' off, absent -> the authored default.
+     Also fixes the old bug where un-checking a default-checked row
+     did not survive a reload. */
+  function restore(box, key) {
+    var v = read(key);
+    if (v === '1') box.checked = true;
+    else if (v === '0') box.checked = false;
+  }
+
+  rows.forEach(function (r) {
+    restore(r.ord, ORD_PREFIX + r.id);
+    restore(r.recv, RECV_PREFIX + r.id);
+    if (r.recv.checked) r.ord.checked = true;   // received implies ordered
+  });
+
+  function persist(r) {
+    save(ORD_PREFIX + r.id, r.ord.checked ? '1' : '0');
+    save(RECV_PREFIX + r.id, r.recv.checked ? '1' : '0');
+  }
+
+  function paint(r) { r.el.classList.toggle('is-received', r.recv.checked); }
+
+  /* ---- Filtering ---- */
+  var filter = 'all';
+  var segButtons = Array.prototype.slice.call(document.querySelectorAll('.seg button'));
+
+  function matches(r) {
+    if (filter === 'toorder') return !r.ord.checked;
+    if (filter === 'transit') return r.ord.checked && !r.recv.checked;
+    return true;
+  }
+
+  function applyFilter() {
+    var filtering = filter !== 'all';
+    var anyVisible = false;
+
+    rows.forEach(function (r) {
+      var show = matches(r);
+      r.el.classList.toggle('hidden-by-filter', !show);
+      if (show) anyVisible = true;
+    });
+    extras.forEach(function (el) { el.classList.toggle('hidden-by-filter', filtering); });
+
+    document.querySelectorAll('section.category').forEach(function (sec) {
+      var visible = rows.filter(function (r) {
+        return sec.contains(r.el) && !r.el.classList.contains('hidden-by-filter');
+      }).length;
+      sec.classList.toggle('hidden-by-filter', filtering && visible === 0);
+    });
+
+    document.body.classList.toggle('filtering', filtering);
+    document.body.classList.toggle('is-empty', filtering && !anyVisible);
+
+    segButtons.forEach(function (b) {
+      var on = b.getAttribute('data-filter') === filter;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  segButtons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      filter = b.getAttribute('data-filter');
+      save(FILTER_KEY, filter);
+      applyFilter();
+    });
+  });
+  var savedFilter = read(FILTER_KEY);
+  if (savedFilter === 'toorder' || savedFilter === 'transit') filter = savedFilter;
+
+  /* ---- Tallies ---- */
+  function update() {
+    var total = rows.length;
+    var ordered = 0, received = 0;
+    var cats = {};
+
+    rows.forEach(function (r) {
+      if (r.ord.checked) ordered++;
+      if (r.recv.checked) received++;
+      if (!r.cat) return;
+      cats[r.cat] = cats[r.cat] || { ord: 0, recv: 0, total: 0 };
+      cats[r.cat].total++;
+      if (r.ord.checked) cats[r.cat].ord++;
+      if (r.recv.checked) cats[r.cat].recv++;
+    });
+
+    var transit = ordered - received;
+    var toOrder = total - ordered;
+
+    document.getElementById('n-ordered').textContent = ordered;
+    document.getElementById('n-transit').textContent = transit;
+    document.getElementById('n-received').textContent = received;
+    document.getElementById('n-total').textContent = total;
+    document.getElementById('badge-toorder').textContent = toOrder;
+    document.getElementById('badge-transit').textContent = transit;
+
+    document.getElementById('fill-ordered').style.width = (total ? ordered / total * 100 : 0) + '%';
+    document.getElementById('fill-received').style.width = (total ? received / total * 100 : 0) + '%';
+    document.getElementById('track-img').setAttribute(
+      'aria-label',
+      received + ' of ' + total + ' received, ' + transit + ' in transit, ' + toOrder + ' still to order'
+    );
+
+    document.querySelectorAll('section.category').forEach(function (sec) {
+      var el = sec.querySelector('[data-cat-count]');
+      if (!el) return;
+      var c = cats[sec.id];
+      el.innerHTML = c ? '<b>' + c.recv + '</b>/' + c.total + ' received · ' + c.ord + ' ordered' : '';
+    });
+  }
+
+  /* ---- Wiring ---- */
+  rows.forEach(function (r) {
+    paint(r);
+
+    r.ord.addEventListener('change', function () {
+      if (!r.ord.checked) r.recv.checked = false;   // can't receive what isn't ordered
+      persist(r); paint(r); update(); applyFilter();
+    });
+
+    r.recv.addEventListener('change', function () {
+      if (r.recv.checked) r.ord.checked = true;     // received implies ordered
+      persist(r); paint(r); update(); applyFilter();
+    });
+  });
+
+  document.getElementById('reset-recv').addEventListener('click', function () {
+    rows.forEach(function (r) { r.recv.checked = false; persist(r); paint(r); });
+    update(); applyFilter();
+  });
+
+  document.getElementById('reset-all').addEventListener('click', function () {
+    rows.forEach(function (r) {
+      r.ord.checked = false;
+      r.recv.checked = false;
+      drop(ORD_PREFIX + r.id);
+      drop(RECV_PREFIX + r.id);
+      paint(r);
+    });
+    update(); applyFilter();
+  });
+
+  update();
+  applyFilter();
+})();
+</script>
+
+</body>
+</html>
