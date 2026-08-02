@@ -17,6 +17,15 @@
     max-width: 1040px;
     margin: 0 auto;
   }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-text { flex: 1 1 400px; min-width: 0; }
+  .hero-top .brand-seg { flex: none; }
   .eyebrow {
     font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
     font-size: 12px;
@@ -389,9 +398,17 @@
 <body>
 
 <header class="hero">
-  <p class="eyebrow">Sourcing &amp; delivery tracker · CURV LAB WR1 Chassis Build Guide, Ver. 2</p>
-  <h1>WR1 Shopping List</h1>
-  <p class="sub">Every off-the-shelf part, fastener, tool, and consumable the WR1 chassis build calls for, pulled from the guide's hardware tables (pp. 63–70) and tool/print pages, with the guide's own purchase links attached. Each line now tracks two steps — <b>Ordered</b> when it's bought, <b>Received</b> when the box is actually in your hands. Both save in this browser.</p>
+  <div class="hero-top">
+    <div class="hero-text">
+      <p class="eyebrow">Sourcing &amp; delivery tracker · CURV LAB WR1 Chassis Build Guide, Ver. 2</p>
+      <h1>WR1 Shopping List</h1>
+      <p class="sub">Every off-the-shelf part, fastener, tool, and consumable the WR1 chassis build calls for, pulled from the guide's hardware tables (pp. 63–70) and tool/print pages, with the guide's own purchase links attached. Each line now tracks two steps — <b>Ordered</b> when it's bought, <b>Received</b> when the box is actually in your hands. Both save in this browser.</p>
+    </div>
+    <div class="seg brand-seg" role="group" aria-label="Color theme">
+      <button type="button" data-brand-choice="track">Track</button>
+      <button type="button" data-brand-choice="curv">Curv</button>
+    </div>
+  </div>
 
   <div class="specs">
     <div class="spec"><div class="v">1/8</div><div class="k">scale</div></div>
@@ -419,11 +436,6 @@
       <label for="builds-input">Building</label>
       <input id="builds-input" type="number" min="1" max="8" value="2">
       <label for="builds-input">car(s)</label>
-    </div>
-    <div class="seg brand-seg" role="group" aria-label="Color theme">
-      <button type="button" data-brand-choice="track">Track</button>
-      <button type="button" data-brand-choice="kraft">Kraft</button>
-      <button type="button" data-brand-choice="curv">Curv</button>
     </div>
     <button class="reset-btn" id="reset-recv" type="button">Reset received</button>
   </div>
@@ -1254,7 +1266,7 @@
   var savedFilter = read(FILTER_KEY);
   if (savedFilter === 'toorder' || savedFilter === 'transit') filter = savedFilter;
 
-  /* ---- Brand switch (Track default / Kraft legacy) ---- */
+  /* ---- Brand switch (Track default / Curv) ---- */
   var brandButtons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
   function applyBrand(b) {
     document.documentElement.setAttribute('data-brand', b);
@@ -1272,7 +1284,7 @@
   });
   (function () {
     var saved = read(BRAND_KEY);
-    applyBrand((saved === 'kraft' || saved === 'curv') ? saved : 'track');
+    applyBrand(saved === 'curv' ? saved : 'track');
   })();
 
   /* ---- Tallies ---- */

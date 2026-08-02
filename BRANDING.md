@@ -1,9 +1,9 @@
 # WR1 branding guide
 
-Three color systems ("brands") for the WR1 tools in this repo. Each is a
-full light/dark pair behind the same CSS custom-property names, so any page
-that already uses the tokens below gets every brand and both color schemes
-for free — nothing to rewrite per-component.
+Two color systems ("brands") for the WR1 tools in this repo. Each is a full
+light/dark pair behind the same CSS custom-property names, so any page that
+already uses the tokens below gets both brands and both color schemes for
+free — nothing to rewrite per-component.
 
 Live reference with swatches, type, and component examples: **[`/brand/`](shopping-list/brand/index.html)**
 (deployed at `https://kms254.github.io/wr1/brand/`).
@@ -35,21 +35,6 @@ that's data.
 "arrived" and "needs attention" everywhere in both brands and don't shift
 with the theme. Only `--accent` carries the brand's identity color.
 
-## Kraft — legacy
-
-The original palette this project shipped with: warm kraft-paper ground,
-terracotta accent. Kept as a selectable alternate, not deleted — some pages
-(or some moods) may still want the workshop feel over the dashboard one.
-
-| Token | Light | Dark |
-|---|---|---|
-| `--ink` | `#211f1b` | `#ece8e0` |
-| `--paper` | `#eae7df` | `#171613` |
-| `--card` | `#f6f4ee` | `#201e1a` |
-| `--accent` | `#a15a1f` | `#d38a45` |
-| `--good` | `#4c6e4a` | `#86a683` |
-| `--warn` | `#a6461f` | `#d97a52` |
-
 ## Curv — matches curvlab.com
 
 Pulled from CURV LAB's actual site (curvlab.com — the studio behind the WR1
@@ -59,8 +44,8 @@ off-white ground, near-black text and nav, warm-grey secondary text, and
 plain text-link CTAs rather than filled colored buttons — restrained by
 design, "less-is-more." Curv reproduces that by making the "accent" itself
 monochrome: buttons are ink-filled, not color-filled. Corners are also
-tightened (6px vs. the other two brands' 10px) for a more architectural,
-less-rounded feel, matching their clean-grid, gallery-like layout.
+tightened (6px vs. Track's 10px) for a more architectural, less-rounded
+feel, matching their clean-grid, gallery-like layout.
 
 | Token | Light | Dark |
 |---|---|---|
@@ -78,24 +63,23 @@ monochrome mood.
 
 ## How the switch works
 
-Every themed page sets tokens three ways, same pattern all three brands follow:
+Every themed page sets tokens three ways, same pattern both brands follow:
 
 1. `:root { ... }` — the default (Track, light).
 2. `@media (prefers-color-scheme: dark) { :root { ... } }` — follows the OS/browser.
 3. `:root[data-theme="dark"]` / `:root[data-theme="light"]` — forces a mode, overriding #2, for a manual light/dark toggle.
 
-Kraft and Curv repeat the same three rules scoped under
-`:root[data-brand="kraft"]` / `:root[data-brand="curv"]`. Switching brands is
-just setting `data-brand="track"` (or removing the attribute), `"kraft"`, or
-`"curv"` on `<html>`. The shopping list's brand switcher does exactly this
-and remembers the choice in `localStorage` (`wr1-cart:brand`) — same pattern
-as its other saved state, see the tracker's own footer for what does and
-doesn't sync.
+Curv repeats the same three rules scoped under `:root[data-brand="curv"]`.
+Switching brands is just setting `data-brand="track"` (or removing the
+attribute) vs `data-brand="curv"` on `<html>`. The shopping list's brand
+switcher — a small pill in the top-right of the header — does exactly this
+and remembers the choice in `localStorage` (`wr1-cart:brand`), shared with
+`/brand/` so switching on either page carries over to the other.
 
 ## Typography
 
-Track and Kraft use system UI stacks only — no custom webfonts, kept
-deliberately plain so the data reads fast on a phone at a parts counter:
+Track uses a system UI stack only — no custom webfonts, kept deliberately
+plain so the data reads fast on a phone at a parts counter:
 
 - **Text**: `ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif`
 - **Data / numerals**: `ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace`, always with `font-variant-numeric: tabular-nums` so counts don't jitter as they change.
@@ -105,7 +89,7 @@ means matching their actual typeface. Their body copy is set in **Poppins**
 (open-licensed via Google Fonts, loaded from `fonts.googleapis.com`); their
 headings use **Clarkson**, a Squarespace-exclusive font we have no license
 to use, so Curv substitutes **Poppins Bold** for headings too — close enough
-in geometric character without borrowing something we can't ship. All three
+in geometric character without borrowing something we can't ship. Both
 brands share one `--font-sans` token, so this swap is a single declaration
 inside the Curv block, not a page-wide change.
 
@@ -120,7 +104,7 @@ Defined once, styled entirely off tokens above — see `/brand/` for live
 examples of each:
 
 - **Card** — `--card` background, 1px `--line` border, `--radius` corners
-  (10px for Track/Kraft, 6px for Curv), a soft two-layer shadow.
+  (10px for Track, 6px for Curv), a soft two-layer shadow.
 - **Flag / badge** — small uppercase pill, `--warn`/`--warn-soft` by default,
   `.good` modifier swaps to `--good`/`--good-soft` for a confirmed/positive
   state.
@@ -132,11 +116,11 @@ examples of each:
   "received") so the *gap* between the two fills reads as "in transit"
   without a third color.
 
-## Adding a fourth brand
+## Adding a third brand
 
-Copy the Curv (or Kraft) block, rename `data-brand="curv"` to your new key,
-pick new values for the twelve tokens above (keep `--good`/`--warn`
-semantic — don't reassign their meaning; only override `--font-sans` or
-`--radius` if the brand genuinely calls for a different typeface or corner
-treatment), and add a button to `.brand-seg` with a matching
-`data-brand-choice`. Nothing else needs to change.
+Copy the Curv block, rename `data-brand="curv"` to your new key, pick new
+values for the twelve tokens above (keep `--good`/`--warn` semantic — don't
+reassign their meaning; only override `--font-sans` or `--radius` if the
+brand genuinely calls for a different typeface or corner treatment), and add
+a button to `.brand-seg` with a matching `data-brand-choice`. Nothing else
+needs to change.

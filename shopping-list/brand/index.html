@@ -132,7 +132,6 @@
     <span class="switcher-label">Preview brand:</span>
     <div class="seg" role="group" aria-label="Color theme">
       <button type="button" data-brand-choice="track">Track</button>
-      <button type="button" data-brand-choice="kraft">Kraft</button>
       <button type="button" data-brand-choice="curv">Curv</button>
     </div>
     <span class="switcher-note">Follows your OS light/dark setting. Saved choice is shared with the <a href="../">shopping list</a>.</span>
@@ -160,20 +159,6 @@
         <span class="bc-btn" style="background:#1c5adb; color:#ffffff;">Primary action</span>
       </div>
 
-      <div class="brand-card" style="background:#eae7df; border-color:#d9d5c9; color:#211f1b;">
-        <p class="bc-name">Kraft — legacy</p>
-        <p class="bc-desc">The original palette: warm kraft-paper ground, terracotta accent. Kept, not deleted.</p>
-        <div class="swatch-row wide">
-          <div class="swatch" style="background:#211f1b;" title="--ink #211f1b"></div>
-          <div class="swatch" style="background:#eae7df;" title="--paper #eae7df"></div>
-          <div class="swatch" style="background:#f6f4ee;" title="--card #f6f4ee"></div>
-          <div class="swatch" style="background:#a15a1f;" title="--accent #a15a1f"></div>
-          <div class="swatch" style="background:#4c6e4a;" title="--good #4c6e4a"></div>
-          <div class="swatch" style="background:#a6461f;" title="--warn #a6461f"></div>
-        </div>
-        <span class="bc-btn" style="background:#a15a1f; color:#ffffff;">Primary action</span>
-      </div>
-
       <div class="brand-card" style="background:#fafaf8; border-color:#e3e2df; color:#111111;">
         <p class="bc-name">Curv — matches curvlab.com</p>
         <p class="bc-desc">Pulled from CURV LAB's real site: monochrome, no accent color, Poppins, sharper 6px corners.</p>
@@ -191,7 +176,7 @@
 
   <section class="block" id="type">
     <div class="block-head"><h2>Typography</h2></div>
-    <p class="block-desc">Live — switches with the brand above. Track and Kraft use system UI stacks only; Curv is the one exception, matching CURV LAB's real Poppins body copy (Clarkson, their heading face, is Squarespace-exclusive and unlicensed here, so Curv substitutes Poppins Bold for headings too).</p>
+    <p class="block-desc">Live — switches with the brand above. Track uses system UI stacks only; Curv is the one exception, matching CURV LAB's real Poppins body copy (Clarkson, their heading face, is Squarespace-exclusive and unlicensed here, so Curv substitutes Poppins Bold for headings too).</p>
     <div class="specimen">
       <p class="eyebrow-demo" id="specimen-eyebrow">Sourcing &amp; delivery tracker</p>
       <p class="display">Build the fleet, one part at a time.</p>
@@ -262,7 +247,7 @@
 </div>
 
 <footer>
-  <p>Track and Kraft are original palettes for this repo. Curv's values are read from curvlab.com's public site (off-white ground, near-black text/nav, warm grey secondary text, no color accent, Poppins body copy) as of 2026-08-02 — not an official CURV LAB asset, just a match built from what's visible on their site.</p>
+  <p>Track is an original palette for this repo. Curv's values are read from curvlab.com's public site (off-white ground, near-black text/nav, warm grey secondary text, no color accent, Poppins body copy) as of 2026-08-02 — not an official CURV LAB asset, just a match built from what's visible on their site.</p>
   <p><a href="../">&larr; Back to the shopping list</a> · <a href="https://github.com/kms254/wr1" target="_blank" rel="noopener">wr1 on GitHub</a></p>
 </footer>
 
@@ -274,7 +259,6 @@
   var fontReadout = document.getElementById('font-readout');
   var FONTS = {
     track: 'ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif',
-    kraft: 'ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif',
     curv: "'Poppins', ui-sans-serif, -apple-system, \"Segoe UI\", Roboto, sans-serif"
   };
 
@@ -295,7 +279,7 @@
 
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) {}
-  apply((saved === 'kraft' || saved === 'curv') ? saved : 'track');
+  apply(saved === 'curv' ? saved : 'track');
 })();
 </script>
 

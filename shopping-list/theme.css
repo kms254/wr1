@@ -61,38 +61,6 @@
   color-scheme: light;
 }
 
-/* ---- Brand: Kraft (legacy) — the original workshop palette ---- */
-:root[data-brand="kraft"] {
-  --ink: #211f1b; --ink-soft: #55504a; --paper: #eae7df; --card: #f6f4ee;
-  --line: #d9d5c9; --line-soft: #e3e0d5; --accent: #a15a1f; --accent-ink: #ffffff;
-  --accent-soft: #f0e0cd; --good: #4c6e4a; --good-soft: #e3ebe0; --warn: #a6461f; --warn-soft: #f4e3da;
-  --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root[data-brand="kraft"] {
-    --ink: #ece8e0; --ink-soft: #b3ada2; --paper: #171613; --card: #201e1a;
-    --line: #38352e; --line-soft: #2a2822; --accent: #d38a45; --accent-ink: #1a1310;
-    --accent-soft: #3a2c1c; --good: #86a683; --good-soft: #26301f; --warn: #d97a52; --warn-soft: #3a2419;
-    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
-    color-scheme: dark;
-  }
-}
-:root[data-brand="kraft"][data-theme="dark"] {
-  --ink: #ece8e0; --ink-soft: #b3ada2; --paper: #171613; --card: #201e1a;
-  --line: #38352e; --line-soft: #2a2822; --accent: #d38a45; --accent-ink: #1a1310;
-  --accent-soft: #3a2c1c; --good: #86a683; --good-soft: #26301f; --warn: #d97a52; --warn-soft: #3a2419;
-  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
-  color-scheme: dark;
-}
-:root[data-brand="kraft"][data-theme="light"] {
-  --ink: #211f1b; --ink-soft: #55504a; --paper: #eae7df; --card: #f6f4ee;
-  --line: #d9d5c9; --line-soft: #e3e0d5; --accent: #a15a1f; --accent-ink: #ffffff;
-  --accent-soft: #f0e0cd; --good: #4c6e4a; --good-soft: #e3ebe0; --warn: #a6461f; --warn-soft: #f4e3da;
-  --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
-  color-scheme: light;
-}
-
 /* ---- Brand: Curv — matches curvlab.com itself: monochrome, no accent
    color, Poppins, sharper corners. Clarkson (their heading face) is a
    Squarespace-exclusive font we can't license, so headings use Poppins
