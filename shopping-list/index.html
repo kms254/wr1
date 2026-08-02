@@ -4,76 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WR1 Shopping List — CURV LAB Chassis Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 <style>
-  :root {
-    --ink: #211f1b;
-    --ink-soft: #55504a;
-    --paper: #eae7df;
-    --card: #f6f4ee;
-    --line: #d9d5c9;
-    --line-soft: #e3e0d5;
-    --accent: #a15a1f;
-    --accent-ink: #ffffff;
-    --accent-soft: #f0e0cd;
-    --good: #4c6e4a;
-    --good-soft: #e3ebe0;
-    --warn: #a6461f;
-    --warn-soft: #f4e3da;
-    --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
-    --radius: 10px;
-    color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: #ece8e0;
-      --ink-soft: #b3ada2;
-      --paper: #171613;
-      --card: #201e1a;
-      --line: #38352e;
-      --line-soft: #2a2822;
-      --accent: #d38a45;
-      --accent-ink: #1a1310;
-      --accent-soft: #3a2c1c;
-      --good: #86a683;
-      --good-soft: #26301f;
-      --warn: #d97a52;
-      --warn-soft: #3a2419;
-      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --ink: #ece8e0; --ink-soft: #b3ada2; --paper: #171613; --card: #201e1a;
-    --line: #38352e; --line-soft: #2a2822; --accent: #d38a45; --accent-ink: #1a1310;
-    --accent-soft: #3a2c1c; --good: #86a683; --good-soft: #26301f; --warn: #d97a52; --warn-soft: #3a2419;
-    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
-    color-scheme: dark;
-  }
-  :root[data-theme="light"] {
-    --ink: #211f1b; --ink-soft: #55504a; --paper: #eae7df; --card: #f6f4ee;
-    --line: #d9d5c9; --line-soft: #e3e0d5; --accent: #a15a1f; --accent-ink: #ffffff;
-    --accent-soft: #f0e0cd; --good: #4c6e4a; --good-soft: #e3ebe0; --warn: #a6461f; --warn-soft: #f4e3da;
-    --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
-    color-scheme: light;
-  }
-
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.45;
-    -webkit-font-smoothing: antialiased;
-  }
-  .mono, .tally, .qty, .cat-count, .spec .v, .seg-badge {
-    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
-    font-variant-numeric: tabular-nums;
-  }
-
-  a { color: var(--accent); }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-
   .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px 96px; }
 
   /* ---------- Header ---------- */
@@ -475,7 +410,7 @@
       <div class="fill fill-ordered" id="fill-ordered"></div>
       <div class="fill fill-received" id="fill-received"></div>
     </div>
-    <div class="seg" role="group" aria-label="Filter the list">
+    <div class="seg filter-seg" role="group" aria-label="Filter the list">
       <button type="button" data-filter="all" class="on">All</button>
       <button type="button" data-filter="toorder">To order<span class="seg-badge" id="badge-toorder">0</span></button>
       <button type="button" data-filter="transit">In transit<span class="seg-badge" id="badge-transit">0</span></button>
@@ -484,6 +419,11 @@
       <label for="builds-input">Building</label>
       <input id="builds-input" type="number" min="1" max="8" value="2">
       <label for="builds-input">car(s)</label>
+    </div>
+    <div class="seg brand-seg" role="group" aria-label="Color theme">
+      <button type="button" data-brand-choice="track">Track</button>
+      <button type="button" data-brand-choice="kraft">Kraft</button>
+      <button type="button" data-brand-choice="curv">Curv</button>
     </div>
     <button class="reset-btn" id="reset-recv" type="button">Reset received</button>
   </div>
@@ -1184,6 +1124,7 @@
 <footer>
   <p>Sourced from the CURV LAB "Chassis Build Guide WR1, Version 2" PDF — hardware tables (pp. 63–70), tools (pp. 61–62), FPV kit (p. 60), and print settings (pp. 58–59, 72–76). Purchase links are the guide's own affiliate links. Nothing here is fabricated — quantities and links are transcribed directly from the document.</p>
   <p>Ordered and received states save to this browser only and don't sync between devices. <em>Differential Lubrication</em> is a reference row (it resolves to the same 30k fluid) and the M4 pins are unused alternates — all three are left out of the counts.</p>
+  <p><a href="brand/">Brand guide</a> — palette, type, and components for both themes.</p>
   <button class="reset-btn" id="reset-all" type="button">Reset everything — ordered and received</button>
 </footer>
 
@@ -1195,6 +1136,7 @@
   var RECV_PREFIX = 'wr1-cart:recv:';
   var BUILDS_KEY = ORD_PREFIX + 'builds';
   var FILTER_KEY = ORD_PREFIX + 'filter';
+  var BRAND_KEY = ORD_PREFIX + 'brand';
 
   function save(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
   function read(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
@@ -1266,7 +1208,7 @@
 
   /* ---- Filtering ---- */
   var filter = 'all';
-  var segButtons = Array.prototype.slice.call(document.querySelectorAll('.seg button'));
+  var segButtons = Array.prototype.slice.call(document.querySelectorAll('.filter-seg button'));
 
   function matches(r) {
     if (filter === 'toorder') return !r.ord.checked;
@@ -1311,6 +1253,27 @@
   });
   var savedFilter = read(FILTER_KEY);
   if (savedFilter === 'toorder' || savedFilter === 'transit') filter = savedFilter;
+
+  /* ---- Brand switch (Track default / Kraft legacy) ---- */
+  var brandButtons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
+  function applyBrand(b) {
+    document.documentElement.setAttribute('data-brand', b);
+    brandButtons.forEach(function (btn) {
+      var on = btn.getAttribute('data-brand-choice') === b;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    save(BRAND_KEY, b);
+  }
+  brandButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyBrand(btn.getAttribute('data-brand-choice'));
+    });
+  });
+  (function () {
+    var saved = read(BRAND_KEY);
+    applyBrand((saved === 'kraft' || saved === 'curv') ? saved : 'track');
+  })();
 
   /* ---- Tallies ---- */
   function update() {

@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WR1 Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px 96px; }
+
+  header.hero { padding: 44px 20px 8px; max-width: 1040px; margin: 0 auto; }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 10px;
+  }
+  h1 { font-size: clamp(28px, 4.4vw, 40px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+  .sub { color: var(--ink-soft); font-size: 15px; max-width: 66ch; margin: 0; }
+  .sub a { font-weight: 600; }
+
+  /* ---- Live switcher ---- */
+  .switcher-bar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    margin-top: 28px;
+  }
+  .switcher-inner {
+    max-width: 1040px; margin: 0 auto; padding: 12px 20px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .switcher-label { font-size: 12px; color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
+  .seg button {
+    font: inherit; font-size: 12px; padding: 6px 14px; border: 0; border-right: 1px solid var(--line);
+    background: none; color: var(--ink-soft); cursor: pointer; white-space: nowrap;
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button:hover { color: var(--accent); }
+  .seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 650; }
+  .switcher-note { font-size: 12px; color: var(--ink-soft); }
+
+  /* ---- Sections ---- */
+  section.block { margin-top: 48px; }
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+  .block-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+  .block-desc { color: var(--ink-soft); font-size: 13.5px; margin: 10px 0 20px; max-width: 68ch; }
+
+  /* ---- Compare strip: all three brands side by side, always ---- */
+  .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .brand-card {
+    border-radius: 12px; padding: 18px 18px 16px; border: 1px solid;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 8px 20px -12px rgba(0,0,0,0.15);
+  }
+  .brand-card .bc-name { font-weight: 800; font-size: 16px; margin: 0 0 3px; }
+  .brand-card .bc-desc { font-size: 12.5px; opacity: 0.85; margin: 0 0 14px; line-height: 1.5; }
+  .swatch-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .swatch {
+    width: 34px; height: 34px; border-radius: 7px; border: 1px solid rgba(0,0,0,0.12);
+    flex: none; position: relative;
+  }
+  .swatch-row.wide .swatch { width: auto; flex: 1 1 34px; min-width: 34px; }
+  .bc-btn { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 650; padding: 7px 14px; border-radius: 999px; }
+
+  /* ---- Type specimen (live — follows the switcher) ---- */
+  .specimen { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 30px; box-shadow: var(--shadow); }
+  .specimen .display { font-size: clamp(26px, 4vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 10px; }
+  .specimen .body-text { font-size: 15px; color: var(--ink-soft); max-width: 62ch; margin: 0 0 18px; line-height: 1.6; }
+  .specimen .label-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: baseline; }
+  .specimen .eyebrow-demo { font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .specimen .mono-demo { font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; font-size: 14px; color: var(--ink); }
+  .specimen .font-name { font-size: 11px; color: var(--ink-soft); margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+  .specimen .font-name code { background: var(--line-soft); padding: 1px 6px; border-radius: 4px; font-size: 11px; }
+
+  /* ---- Component gallery (live) ---- */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .gallery-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+  .gallery-card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); margin: 0 0 14px; font-weight: 700; }
+
+  .demo-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); font: inherit; font-size: 13px; font-weight: 650; padding: 8px 16px; border-radius: var(--radius); cursor: pointer; }
+  .btn-secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: var(--radius); cursor: pointer; }
+
+  .demo-flags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .flag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--warn); background: var(--warn-soft); padding: 3px 8px; border-radius: 5px; }
+  .flag.good { color: var(--good); background: var(--good-soft); }
+
+  .demo-seg .seg { margin-top: 2px; }
+
+  .demo-progress .progress-track { position: relative; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .demo-progress .fill { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 4px; }
+  .demo-progress .fill-a { background: color-mix(in srgb, var(--accent) 55%, transparent); width: 78%; }
+  .demo-progress .fill-b { background: var(--good); width: 46%; }
+  .demo-progress .legend { display: flex; gap: 14px; margin-top: 10px; font-size: 11.5px; color: var(--ink-soft); }
+  .demo-progress .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+  .demo-item {
+    display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center;
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px;
+  }
+  .demo-item .di-thumb { width: 48px; height: 48px; border-radius: 8px; background: var(--card); border: 1px solid var(--line); }
+  .demo-item .di-name { font-weight: 650; font-size: 13.5px; }
+  .demo-item .di-note { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  .demo-item .di-check { width: 18px; height: 18px; accent-color: var(--good); }
+
+  footer {
+    max-width: 1040px; margin: 56px auto 0; padding: 20px; border-top: 1px solid var(--line);
+    color: var(--ink-soft); font-size: 12.5px; display: flex; flex-direction: column; gap: 10px;
+  }
+  footer p { margin: 0; max-width: 78ch; }
+
+  @media (max-width: 640px) {
+    .demo-item { grid-template-columns: 40px 1fr; }
+    .demo-item .di-check { grid-column: 1 / -1; justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="eyebrow">WR1 · CURV LAB Chassis Build</p>
+  <h1>Brand Guide</h1>
+  <p class="sub">Three color systems for the WR1 tools in this repo, all built from the same eleven-token structure — pick one below to see it live in the type and component sections. Written version with rationale: <a href="https://github.com/kms254/wr1/blob/main/BRANDING.md" target="_blank" rel="noopener">BRANDING.md</a>.</p>
+</header>
+
+<div class="switcher-bar">
+  <div class="switcher-inner">
+    <span class="switcher-label">Preview brand:</span>
+    <div class="seg" role="group" aria-label="Color theme">
+      <button type="button" data-brand-choice="track">Track</button>
+      <button type="button" data-brand-choice="kraft">Kraft</button>
+      <button type="button" data-brand-choice="curv">Curv</button>
+    </div>
+    <span class="switcher-note">Follows your OS light/dark setting. Saved choice is shared with the <a href="../">shopping list</a>.</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="block" id="compare">
+    <div class="block-head"><h2>The three brands, side by side</h2></div>
+    <p class="block-desc">Shown here at fixed values regardless of the switcher above, so you can compare all three at once. Colors are each brand's <em>light-mode</em> values.</p>
+
+    <div class="compare-grid">
+      <div class="brand-card" style="background:#eef0f3; border-color:#d6dae1; color:#14171c;">
+        <p class="bc-name">Track — default</p>
+        <p class="bc-desc">Blue / black / grey. One livery for both future cars — confident, cool, dashboard-like.</p>
+        <div class="swatch-row wide">
+          <div class="swatch" style="background:#14171c;" title="--ink #14171c"></div>
+          <div class="swatch" style="background:#eef0f3;" title="--paper #eef0f3"></div>
+          <div class="swatch" style="background:#ffffff;" title="--card #ffffff"></div>
+          <div class="swatch" style="background:#1c5adb;" title="--accent #1c5adb"></div>
+          <div class="swatch" style="background:#3c7a54;" title="--good #3c7a54"></div>
+          <div class="swatch" style="background:#c23b2c;" title="--warn #c23b2c"></div>
+        </div>
+        <span class="bc-btn" style="background:#1c5adb; color:#ffffff;">Primary action</span>
+      </div>
+
+      <div class="brand-card" style="background:#eae7df; border-color:#d9d5c9; color:#211f1b;">
+        <p class="bc-name">Kraft — legacy</p>
+        <p class="bc-desc">The original palette: warm kraft-paper ground, terracotta accent. Kept, not deleted.</p>
+        <div class="swatch-row wide">
+          <div class="swatch" style="background:#211f1b;" title="--ink #211f1b"></div>
+          <div class="swatch" style="background:#eae7df;" title="--paper #eae7df"></div>
+          <div class="swatch" style="background:#f6f4ee;" title="--card #f6f4ee"></div>
+          <div class="swatch" style="background:#a15a1f;" title="--accent #a15a1f"></div>
+          <div class="swatch" style="background:#4c6e4a;" title="--good #4c6e4a"></div>
+          <div class="swatch" style="background:#a6461f;" title="--warn #a6461f"></div>
+        </div>
+        <span class="bc-btn" style="background:#a15a1f; color:#ffffff;">Primary action</span>
+      </div>
+
+      <div class="brand-card" style="background:#fafaf8; border-color:#e3e2df; color:#111111;">
+        <p class="bc-name">Curv — matches curvlab.com</p>
+        <p class="bc-desc">Pulled from CURV LAB's real site: monochrome, no accent color, Poppins, sharper 6px corners.</p>
+        <div class="swatch-row wide">
+          <div class="swatch" style="background:#111111;" title="--ink / --accent #111111"></div>
+          <div class="swatch" style="background:#fafaf8;" title="--paper #fafaf8"></div>
+          <div class="swatch" style="background:#ffffff;" title="--card #ffffff"></div>
+          <div class="swatch" style="background:#3f6b4c;" title="--good #3f6b4c"></div>
+          <div class="swatch" style="background:#8a3b2e;" title="--warn #8a3b2e"></div>
+        </div>
+        <span class="bc-btn" style="background:#111111; color:#ffffff; border-radius:6px;">Primary action</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="type">
+    <div class="block-head"><h2>Typography</h2></div>
+    <p class="block-desc">Live — switches with the brand above. Track and Kraft use system UI stacks only; Curv is the one exception, matching CURV LAB's real Poppins body copy (Clarkson, their heading face, is Squarespace-exclusive and unlicensed here, so Curv substitutes Poppins Bold for headings too).</p>
+    <div class="specimen">
+      <p class="eyebrow-demo" id="specimen-eyebrow">Sourcing &amp; delivery tracker</p>
+      <p class="display">Build the fleet, one part at a time.</p>
+      <p class="body-text">Every off-the-shelf part, fastener, tool, and consumable the build calls for, tracked from order to arrival. This line sets the body-copy weight, size, and measure this brand ships with.</p>
+      <div class="label-row">
+        <span class="mono-demo">142 ordered · 37 in transit · 105 received</span>
+      </div>
+      <p class="font-name">--font-sans resolves to: <code id="font-readout">ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif</code></p>
+    </div>
+  </section>
+
+  <section class="block" id="components">
+    <div class="block-head"><h2>Components</h2></div>
+    <p class="block-desc">Live — the same markup and CSS the shopping list itself uses, just re-themed by the switcher above.</p>
+
+    <div class="gallery">
+      <div class="gallery-card">
+        <h3>Buttons</h3>
+        <div class="demo-buttons">
+          <button class="btn-primary" type="button">Mark received</button>
+          <button class="btn-secondary" type="button">View listing</button>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <h3>Badges</h3>
+        <div class="demo-flags">
+          <span class="flag good">Confirmed pick</span>
+          <span class="flag">Needs a decision</span>
+        </div>
+      </div>
+
+      <div class="gallery-card demo-seg">
+        <h3>Segmented control</h3>
+        <div class="seg" role="group" aria-label="example">
+          <button type="button" class="on">All</button>
+          <button type="button">To order</button>
+          <button type="button">In transit</button>
+        </div>
+      </div>
+
+      <div class="gallery-card demo-progress">
+        <h3>Two-tone progress</h3>
+        <div class="progress-track">
+          <div class="fill fill-a"></div>
+          <div class="fill fill-b"></div>
+        </div>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--accent);"></span>ordered</span>
+          <span><span class="dot" style="background:var(--good);"></span>received</span>
+        </div>
+      </div>
+
+      <div class="gallery-card" style="grid-column: 1 / -1;">
+        <h3>Item row</h3>
+        <div class="demo-item">
+          <div class="di-thumb"></div>
+          <div>
+            <div class="di-name">GPM Front/Rear Diff Set — Black + Blue</div>
+            <div class="di-note">Bevel-gear diff cases for the front and rear lower diff assemblies.</div>
+          </div>
+          <input class="di-check" type="checkbox" checked disabled aria-label="Received">
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Track and Kraft are original palettes for this repo. Curv's values are read from curvlab.com's public site (off-white ground, near-black text/nav, warm grey secondary text, no color accent, Poppins body copy) as of 2026-08-02 — not an official CURV LAB asset, just a match built from what's visible on their site.</p>
+  <p><a href="../">&larr; Back to the shopping list</a> · <a href="https://github.com/kms254/wr1" target="_blank" rel="noopener">wr1 on GitHub</a></p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'wr1-cart:brand';
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.switcher-bar .seg button'));
+  var fontReadout = document.getElementById('font-readout');
+  var FONTS = {
+    track: 'ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif',
+    kraft: 'ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif',
+    curv: "'Poppins', ui-sans-serif, -apple-system, \"Segoe UI\", Roboto, sans-serif"
+  };
+
+  function apply(brand) {
+    document.documentElement.setAttribute('data-brand', brand);
+    buttons.forEach(function (b) {
+      var on = b.getAttribute('data-brand-choice') === brand;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (fontReadout) fontReadout.textContent = FONTS[brand] || FONTS.track;
+    try { localStorage.setItem(KEY, brand); } catch (e) {}
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-brand-choice')); });
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply((saved === 'kraft' || saved === 'curv') ? saved : 'track');
+})();
+</script>
+
+</body>
+</html>

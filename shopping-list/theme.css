@@ -1,0 +1,147 @@
+/* WR1 shared brand tokens — see /BRANDING.md for the written guide and
+   /brand/ for a live, comparable reference. Every page under shopping-list/
+   links this file and gets all three brands + light/dark for free.
+   To add a brand: copy a data-brand block, pick new values, done —
+   see "Adding a fourth brand" in BRANDING.md. */
+
+/* ============================================================
+   Brand: Track (default) — blue / black / grey, one livery per
+   future car.
+   ============================================================ */
+:root {
+  --ink: #14171c;
+  --ink-soft: #565f6b;
+  --paper: #eef0f3;
+  --card: #ffffff;
+  --line: #d6dae1;
+  --line-soft: #e6e9ed;
+  --accent: #1c5adb;
+  --accent-ink: #ffffff;
+  --accent-soft: #dde8fb;
+  --good: #3c7a54;
+  --good-soft: #e1efe4;
+  --warn: #c23b2c;
+  --warn-soft: #fbe4e0;
+  --shadow: 0 1px 2px rgba(20,23,28,0.06), 0 8px 24px -12px rgba(20,23,28,0.16);
+  --radius: 10px;
+  --font-sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #eef1f5;
+    --ink-soft: #99a2ae;
+    --paper: #0c0f13;
+    --card: #171b21;
+    --line: #2b313a;
+    --line-soft: #1f242b;
+    --accent: #5b93ff;
+    --accent-ink: #0b1220;
+    --accent-soft: #1c2b46;
+    --good: #7fb88f;
+    --good-soft: #1c2a21;
+    --warn: #e2705a;
+    --warn-soft: #3a2119;
+    --shadow: 0 1px 2px rgba(0,0,0,0.45), 0 12px 28px -14px rgba(0,0,0,0.65);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #eef1f5; --ink-soft: #99a2ae; --paper: #0c0f13; --card: #171b21;
+  --line: #2b313a; --line-soft: #1f242b; --accent: #5b93ff; --accent-ink: #0b1220;
+  --accent-soft: #1c2b46; --good: #7fb88f; --good-soft: #1c2a21; --warn: #e2705a; --warn-soft: #3a2119;
+  --shadow: 0 1px 2px rgba(0,0,0,0.45), 0 12px 28px -14px rgba(0,0,0,0.65);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --ink: #14171c; --ink-soft: #565f6b; --paper: #eef0f3; --card: #ffffff;
+  --line: #d6dae1; --line-soft: #e6e9ed; --accent: #1c5adb; --accent-ink: #ffffff;
+  --accent-soft: #dde8fb; --good: #3c7a54; --good-soft: #e1efe4; --warn: #c23b2c; --warn-soft: #fbe4e0;
+  --shadow: 0 1px 2px rgba(20,23,28,0.06), 0 8px 24px -12px rgba(20,23,28,0.16);
+  color-scheme: light;
+}
+
+/* ---- Brand: Kraft (legacy) — the original workshop palette ---- */
+:root[data-brand="kraft"] {
+  --ink: #211f1b; --ink-soft: #55504a; --paper: #eae7df; --card: #f6f4ee;
+  --line: #d9d5c9; --line-soft: #e3e0d5; --accent: #a15a1f; --accent-ink: #ffffff;
+  --accent-soft: #f0e0cd; --good: #4c6e4a; --good-soft: #e3ebe0; --warn: #a6461f; --warn-soft: #f4e3da;
+  --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="kraft"] {
+    --ink: #ece8e0; --ink-soft: #b3ada2; --paper: #171613; --card: #201e1a;
+    --line: #38352e; --line-soft: #2a2822; --accent: #d38a45; --accent-ink: #1a1310;
+    --accent-soft: #3a2c1c; --good: #86a683; --good-soft: #26301f; --warn: #d97a52; --warn-soft: #3a2419;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-brand="kraft"][data-theme="dark"] {
+  --ink: #ece8e0; --ink-soft: #b3ada2; --paper: #171613; --card: #201e1a;
+  --line: #38352e; --line-soft: #2a2822; --accent: #d38a45; --accent-ink: #1a1310;
+  --accent-soft: #3a2c1c; --good: #86a683; --good-soft: #26301f; --warn: #d97a52; --warn-soft: #3a2419;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 28px -14px rgba(0,0,0,0.6);
+  color-scheme: dark;
+}
+:root[data-brand="kraft"][data-theme="light"] {
+  --ink: #211f1b; --ink-soft: #55504a; --paper: #eae7df; --card: #f6f4ee;
+  --line: #d9d5c9; --line-soft: #e3e0d5; --accent: #a15a1f; --accent-ink: #ffffff;
+  --accent-soft: #f0e0cd; --good: #4c6e4a; --good-soft: #e3ebe0; --warn: #a6461f; --warn-soft: #f4e3da;
+  --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 8px 24px -12px rgba(33,31,27,0.18);
+  color-scheme: light;
+}
+
+/* ---- Brand: Curv — matches curvlab.com itself: monochrome, no accent
+   color, Poppins, sharper corners. Clarkson (their heading face) is a
+   Squarespace-exclusive font we can't license, so headings use Poppins
+   Bold instead — same geometric character, openly licensed. ---- */
+:root[data-brand="curv"] {
+  --ink: #111111; --ink-soft: #6b6b68; --paper: #fafaf8; --card: #ffffff;
+  --line: #e3e2df; --line-soft: #eeeeec; --accent: #111111; --accent-ink: #ffffff;
+  --accent-soft: #ececea; --good: #3f6b4c; --good-soft: #e7ece8; --warn: #8a3b2e; --warn-soft: #f1e6e3;
+  --shadow: 0 1px 2px rgba(17,17,17,0.05), 0 8px 20px -12px rgba(17,17,17,0.14);
+  --radius: 6px;
+  --font-sans: 'Poppins', ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="curv"] {
+    --ink: #f2f1ee; --ink-soft: #a3a29d; --paper: #0e0e0d; --card: #1a1a18;
+    --line: #2c2c29; --line-soft: #201f1d; --accent: #f2f1ee; --accent-ink: #111111;
+    --accent-soft: #262624; --good: #6f9c7d; --good-soft: #1c2620; --warn: #c17b68; --warn-soft: #2e1f1a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 26px -14px rgba(0,0,0,0.55);
+    color-scheme: dark;
+  }
+}
+:root[data-brand="curv"][data-theme="dark"] {
+  --ink: #f2f1ee; --ink-soft: #a3a29d; --paper: #0e0e0d; --card: #1a1a18;
+  --line: #2c2c29; --line-soft: #201f1d; --accent: #f2f1ee; --accent-ink: #111111;
+  --accent-soft: #262624; --good: #6f9c7d; --good-soft: #1c2620; --warn: #c17b68; --warn-soft: #2e1f1a;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 26px -14px rgba(0,0,0,0.55);
+  color-scheme: dark;
+}
+:root[data-brand="curv"][data-theme="light"] {
+  --ink: #111111; --ink-soft: #6b6b68; --paper: #fafaf8; --card: #ffffff;
+  --line: #e3e2df; --line-soft: #eeeeec; --accent: #111111; --accent-ink: #ffffff;
+  --accent-soft: #ececea; --good: #3f6b4c; --good-soft: #e7ece8; --warn: #8a3b2e; --warn-soft: #f1e6e3;
+  --shadow: 0 1px 2px rgba(17,17,17,0.05), 0 8px 20px -12px rgba(17,17,17,0.14);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+.mono, .tally, .qty, .cat-count, .spec .v, .seg-badge {
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
