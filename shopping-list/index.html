@@ -265,7 +265,7 @@
   .items { display: flex; flex-direction: column; gap: 8px; }
   .item {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 60px auto 1fr auto;
     gap: 4px 16px;
     align-items: start;
     background: var(--card);
@@ -273,6 +273,15 @@
     border-radius: var(--radius);
     padding: 12px 14px;
     box-shadow: var(--shadow);
+  }
+  .thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4px;
   }
 
   /* The two-step status track: Ordered -> Received */
@@ -343,6 +352,7 @@
   /* Reference / alternate rows — no purchase, excluded from the tallies */
   .item.reference { background: none; box-shadow: none; border-style: dashed; }
   .ref-mark {
+    grid-column: span 2;
     display: flex; align-items: flex-start;
     min-width: 94px; padding-top: 3px;
     font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
@@ -368,6 +378,17 @@
 
   /* ---------- Tools / print grid ---------- */
   .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 8px; }
+  .thumb-card {
+    display: block;
+    width: 100%;
+    height: 110px;
+    object-fit: contain;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px;
+    margin-bottom: 8px;
+  }
   .tool-card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -421,6 +442,8 @@
 
   @media (max-width: 560px) {
     .item { grid-template-columns: 1fr; }
+    .thumb { width: 72px; height: 72px; margin-bottom: 2px; }
+    .ref-mark { grid-column: auto; }
     .track { flex-direction: row; gap: 16px; flex-wrap: wrap; min-width: 0; }
     .item-side { align-items: flex-start; text-align: left; margin-top: 4px; }
     .buy-links { justify-content: flex-start; }
@@ -486,6 +509,7 @@
     <div class="items">
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/gpm-diff-set.webp" alt="GPM Front/Rear Diff Set — Black + Blue" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="gpm-diff-set" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="gpm-diff-set"><span>Received</span></label>
@@ -502,6 +526,7 @@
       </div>
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/gpm-center-diff.webp" alt="GPM Center Diff — Black + Blue" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="gpm-center-diff" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="gpm-center-diff"><span>Received</span></label>
@@ -518,6 +543,7 @@
       </div>
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/pinion-12t.webp" alt="12T M1 5mm Pinion" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="pinion-12t" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="pinion-12t"><span>Received</span></label>
@@ -534,6 +560,7 @@
       </div>
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/motor-esc.webp" alt="Motor / ESC Combo" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="motor-esc" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="motor-esc"><span>Received</span></label>
@@ -550,6 +577,7 @@
       </div>
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/esc-card.webp" alt="Hobbywing 120A LED Program Card" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="esc-card" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="esc-card"><span>Received</span></label>
@@ -566,6 +594,7 @@
       </div>
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/link-rod.webp" alt="Links (50–52mm) — Threaded Rod, Inner Section" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="link-rod" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="link-rod"><span>Received</span></label>
@@ -582,6 +611,7 @@
       </div>
 
       <div class="item" data-cat="drivetrain">
+        <img class="thumb" src="images/link-rodend.webp" alt="Links (50–52mm) — Rod End Ball Joints" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="link-rodend" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="link-rodend"><span>Received</span></label>
@@ -610,6 +640,7 @@
       <div class="choice-label">Pick one pin system</div>
 
       <div class="item" data-cat="pivots">
+        <img class="thumb" src="images/eclip-m3-50.jpg" alt="50mm M3 E-clip Pins" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="eclip-m3-50" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="eclip-m3-50"><span>Received</span></label>
@@ -626,6 +657,7 @@
       </div>
 
       <div class="item" data-cat="pivots">
+        <img class="thumb" src="images/eclip-m3-25.jpg" alt="25mm M3 E-clip Pins" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="eclip-m3-25" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="eclip-m3-25"><span>Received</span></label>
@@ -686,6 +718,7 @@
     <div class="items">
 
       <div class="item" data-cat="suspension">
+        <img class="thumb" src="images/shocks.jpg" alt="Shocks — 85mm &amp; 95mm" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="shocks" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="shocks"><span>Received</span></label>
@@ -702,6 +735,7 @@
       </div>
 
       <div class="item" data-cat="suspension">
+        <img class="thumb" src="images/servo.jpg" alt="Waterproof Servo" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="servo" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="servo"><span>Received</span></label>
@@ -718,6 +752,7 @@
       </div>
 
       <div class="item" data-cat="suspension">
+        <img class="thumb" src="images/axles.webp" alt="55mm Axles" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="axles" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="axles"><span>Received</span></label>
@@ -743,6 +778,7 @@
     <div class="items">
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/inserts-57.jpg" alt="Inserts M3 × 5.7mm" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="inserts-57" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="inserts-57"><span>Received</span></label>
@@ -756,6 +792,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/inserts-3.jpg" alt="Inserts M3 × 3mm" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="inserts-3" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="inserts-3"><span>Received</span></label>
@@ -769,6 +806,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/fastener-kit.jpg" alt="M3 Fastener Kit" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="fastener-kit" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="fastener-kit"><span>Received</span></label>
@@ -782,6 +820,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/screw-30mm.webp" alt="M3 Button Head Screw Assortment" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="screw-30mm" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="screw-30mm"><span>Received</span></label>
@@ -795,6 +834,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/set-screws.webp" alt="M3 × 8mm Set Screws" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="set-screws" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="set-screws"><span>Received</span></label>
@@ -808,6 +848,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/lock-nut.webp" alt="M4 Lock Nut" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="lock-nut" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="lock-nut"><span>Received</span></label>
@@ -821,6 +862,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/long-screw-set.jpg" alt="M3 Long Screw Set" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="long-screw-set" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="long-screw-set"><span>Received</span></label>
@@ -834,6 +876,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/dowel-pin.webp" alt="M1.5 × 10mm Dowel Pin" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="dowel-pin" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="dowel-pin"><span>Received</span></label>
@@ -847,6 +890,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/bearings-small.jpg" alt="Bearings 5 × 10 × 4mm" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="bearings-small" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="bearings-small"><span>Received</span></label>
@@ -860,6 +904,7 @@
       </div>
 
       <div class="item" data-cat="fasteners">
+        <img class="thumb" src="images/bearings-large.jpg" alt="Bearings 8 × 16 × 5mm" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="bearings-large" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="bearings-large"><span>Received</span></label>
@@ -891,6 +936,7 @@
       </div>
 
       <div class="item" data-cat="fluids">
+        <img class="thumb" src="images/diff-fluid-30k.webp" alt="30k Diff Fluid" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="diff-fluid-30k" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="diff-fluid-30k"><span>Received</span></label>
@@ -904,6 +950,7 @@
       </div>
 
       <div class="item" data-cat="fluids">
+        <img class="thumb" src="images/lith-grease.webp" alt="White Lithium Grease" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="lith-grease" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="lith-grease"><span>Received</span></label>
@@ -917,6 +964,7 @@
       </div>
 
       <div class="item" data-cat="fluids">
+        <img class="thumb" src="images/battery-straps.webp" alt="Velcro Battery Straps" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="battery-straps" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="battery-straps"><span>Received</span></label>
@@ -938,6 +986,7 @@
     <div class="items">
 
       <div class="item" data-cat="optional">
+        <img class="thumb" src="images/wheels-tires.webp" alt="Wheels / Tires — 2.2in" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="wheels-tires" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="wheels-tires"><span>Received</span></label>
@@ -951,6 +1000,7 @@
       </div>
 
       <div class="item" data-cat="optional">
+        <img class="thumb" src="images/battery-confirmed.jpg" alt="Battery — Zeee 3S 5200mAh" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="battery-confirmed" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="battery-confirmed"><span>Received</span></label>
@@ -967,6 +1017,7 @@
       </div>
 
       <div class="item" data-cat="optional">
+        <img class="thumb" src="images/ec5-connectors.webp" alt="EC5 Connector Set" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="ec5-connectors" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="ec5-connectors"><span>Received</span></label>
@@ -983,6 +1034,7 @@
       </div>
 
       <div class="item" data-cat="optional">
+        <img class="thumb" src="images/txrx-radiolink.jpg" alt="Transmitter / Receiver — Radiolink T8S + R8EF" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="txrx-radiolink" checked><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="txrx-radiolink"><span>Received</span></label>
@@ -999,6 +1051,7 @@
       </div>
 
       <div class="item" data-cat="optional">
+        <img class="thumb" src="images/fpv-kit.png" alt="Moonlight 4K Camera FPV Kit" loading="lazy">
         <div class="track">
           <label class="tick" data-role="ordered"><input type="checkbox" data-role="ordered" data-id="fpv-kit"><span>Ordered</span></label>
           <label class="tick" data-role="received"><input type="checkbox" data-role="received" data-id="fpv-kit"><span>Received</span></label>
@@ -1074,6 +1127,7 @@
       </div>
 
       <div class="tool-card" data-cat="tools">
+        <img class="thumb-card" src="images/tool-mat.webp" alt="A2 Cutting Mat" loading="lazy">
         <span class="flag good">Confirmed pick</span>
         <div class="part-name">A2 Cutting Mat <em style="font-style:normal; color:var(--ink-soft); font-size:11px;">(helpful)</em></div>
         <div class="part-note">Self-healing double-sided, 60×45cm, $18.74.</div>
