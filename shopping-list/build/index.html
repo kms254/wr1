@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WR1 Build Guide — Session 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px 96px; }
+
+  header.hero { padding: 40px 20px 24px; max-width: 900px; margin: 0 auto; }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 10px;
+  }
+  h1 { font-size: clamp(26px, 4.2vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
+  .sub { color: var(--ink-soft); font-size: 15px; max-width: 66ch; margin: 0; line-height: 1.6; }
+
+  /* ---- Attribution — deliberately loud, not a footnote ---- */
+  .credit {
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin: 24px 20px 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .credit b { color: var(--ink); }
+  .credit .credit-links { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .credit .credit-links a {
+    font-weight: 650; font-size: 12.5px; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .credit .credit-links a:hover { opacity: 0.88; }
+  .credit .credit-links a.secondary { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+
+  /* ---- Session index chips ---- */
+  .session-nav {
+    max-width: 900px; margin: 32px auto 0; padding: 0 20px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .session-nav a {
+    font-size: 12px; text-decoration: none; color: var(--ink-soft);
+    background: var(--card); border: 1px solid var(--line);
+    padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  .session-nav a.on { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); font-weight: 650; }
+  .session-nav .coming { font-size: 12px; color: var(--ink-soft); opacity: 0.6; padding: 5px 4px; }
+
+  /* ---- Session card ---- */
+  section.session { margin-top: 24px; }
+  .session-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 24px 28px; box-shadow: var(--shadow);
+  }
+  .session-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .session-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+  .session-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-soft); margin: 10px 0 20px; }
+  .session-meta span { display: inline-flex; align-items: center; gap: 5px; }
+  .session-meta b { color: var(--ink); }
+
+  .consolidation-note {
+    background: var(--good-soft); border: 1px solid color-mix(in srgb, var(--good) 35%, var(--line));
+    border-radius: var(--radius); padding: 12px 14px; font-size: 13px; line-height: 1.55; margin: 0 0 22px;
+  }
+  .consolidation-note b { color: var(--good); }
+
+  .subhead { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 700; margin: 26px 0 12px; }
+  .subhead:first-of-type { margin-top: 0; }
+
+  .materials { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .material { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  .material .m-name { font-weight: 650; font-size: 13px; }
+  .material .m-qty { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .step-list { display: flex; flex-direction: column; gap: 18px; margin-top: 4px; }
+  .step { display: grid; grid-template-columns: 32px 1fr; gap: 12px; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex: none;
+  }
+  .step-body { padding-top: 3px; }
+  .step-body p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+  .step-body .step-fig { margin-top: 12px; }
+  .step-body img { max-width: 100%; border: 1px solid var(--line); border-radius: 8px; display: block; }
+  .step-body figcaption { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+
+  .swap-note {
+    background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line));
+    border-radius: var(--radius); padding: 14px 16px; font-size: 13px; line-height: 1.6; margin: 24px 0 0;
+  }
+  .swap-note b { color: var(--warn); }
+
+  .complete-row {
+    display: flex; align-items: center; gap: 10px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line-soft);
+  }
+  .complete-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--good); cursor: pointer; }
+  .complete-row label { font-size: 13.5px; font-weight: 600; cursor: pointer; }
+  .session-card.is-done { border-color: var(--good); }
+  .session-card.is-done .session-head h2 { color: var(--good); }
+
+  footer {
+    max-width: 900px; margin: 48px auto 0; padding: 20px; border-top: 1px solid var(--line);
+    color: var(--ink-soft); font-size: 12.5px; display: flex; flex-direction: column; gap: 10px;
+  }
+  footer p { margin: 0; max-width: 78ch; }
+
+  @media (max-width: 560px) {
+    .session-head { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><div class="site-nav-inner">
+  <a href="../">Shopping List</a>
+  <a href="./" class="on">Build Guide</a>
+  <a href="../brand/">Brand Guide</a>
+</div></nav>
+
+<header class="hero">
+  <p class="eyebrow">WR1 · CURV LAB Chassis Build</p>
+  <h1>Build Guide</h1>
+  <p class="sub">The official 67-page assembly guide, reorganized into roughly 30-minute sessions sized for a 10-year-old with a grown-up's help — and re-sequenced around an <b>insert press</b> instead of the soldering iron the book calls for. One session live so far; more coming after this one.</p>
+</header>
+
+<div class="credit">
+  <b>All of the design work here belongs to CURV LAB</b> — the chassis design, the 3D print files, the official Chassis Build Guide WR1 (Ver. 2), and the reference diagrams below are their work, not ours. This page is just our own re-sequencing of their instructions for how <em>we're</em> building it. If you're building a WR1 yourself, buy the guide and print files straight from them.
+  <div class="credit-links">
+    <a href="https://www.curvlab.com/wr1" target="_blank" rel="noopener">curvlab.com/wr1</a>
+    <a class="secondary" href="https://www.curvlab.com/store-1/wr1-3d-print-files" target="_blank" rel="noopener">Buy the print files</a>
+    <a class="secondary" href="https://www.curvlab.com" target="_blank" rel="noopener">curvlab.com</a>
+  </div>
+</div>
+
+<nav class="session-nav" aria-label="Sessions">
+  <a href="#session-1" class="on">Session 1 · Chassis Plate inserts</a>
+  <span class="coming">More sessions coming…</span>
+</nav>
+
+<div class="wrap">
+
+  <section class="session" id="session-1">
+    <div class="session-card" id="session-1-card">
+      <div class="session-head">
+        <h2>Session 1 — Press the Chassis Plate Inserts</h2>
+      </div>
+      <div class="session-meta">
+        <span>⏱ <b>~30 min</b></span>
+        <span>👤 <b>Kid-led, adult supervises the press</b></span>
+        <span>🛠 <b>Insert press</b> (not the soldering iron)</span>
+      </div>
+
+      <div class="consolidation-note">
+        <b>What we changed:</b> the official guide presses these same 10 inserts in two separate moments — step 1.01 (into the two Chassis Plate Posts) and step 1.2 (into the main plate, several pages later in the flow). Since we're using a press instead of a soldering iron, there's no reason to split them — we do all 10 in one sitting, before any fastening starts.
+      </div>
+
+      <p class="subhead">What you need</p>
+      <div class="materials">
+        <div class="material"><div class="m-name">Chassis Plate</div><div class="m-qty">qty 1 · printed, Set A</div></div>
+        <div class="material"><div class="m-name">Chassis Plate Post</div><div class="m-qty">qty 2 · printed, Set A</div></div>
+        <div class="material"><div class="m-name">M3 × 5.7mm threaded insert</div><div class="m-qty">qty 10 · brass</div></div>
+        <div class="material"><div class="m-name">Insert press + M3 tip</div><div class="m-qty">your tool, not the book's</div></div>
+      </div>
+
+      <p class="subhead">Steps</p>
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p>Find your parts: the <b>Chassis Plate</b> (the big long one), the <b>2 Chassis Plate Posts</b> (small tubes with holes through the middle), and count out <b>10 brass inserts</b>. Lay them out so nothing rolls away.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p>Get a grown-up to help set up the insert press with the M3 tip. This is the "adult part" of the job — presses can pinch fingers, so hands stay clear while it's running.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p>Press <b>1 insert into each Chassis Plate Post</b> — 2 posts, 2 inserts. Keep the insert straight as it goes in, not tilted.</p>
+            <figure class="step-fig">
+              <img src="images/chassis-plate-posts.png" alt="Official guide diagram showing 2 threaded inserts pressed into the Chassis Plate Posts" loading="lazy">
+              <figcaption>From the official guide (step 1.01) — just do the insert part shown here. Ignore the "1.02" fastening callout in this image; that happens in a later session once the diffs are in.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p>Press the remaining <b>8 inserts into the main Chassis Plate</b>, at the holes marked in the guide's diagram below.</p>
+            <figure class="step-fig">
+              <img src="images/chassis-plate-body.png" alt="Official guide diagram showing 8 threaded insert locations on the main Chassis Plate" loading="lazy">
+              <figcaption>From the official guide (step 1.2). The soldering iron and insert-tip pictured are the book's original method — see the note below for why we're using the press instead.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <p>Check every insert: it should sit <b>flush and straight</b>, flat with the plastic, not leaning to one side. If one looks crooked, tell a grown-up — it's easier to back it out and redo it now than after the plate is full of other parts.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <p>Put the finished Chassis Plate and both posts into a labeled bag — <b>"Session 2: fasten posts + start center diff"</b> — so they're easy to find next time.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="swap-note">
+        <b>Why we skip the soldering iron:</b> the book's method heats a soldering iron to 250–350°F and melts each insert in by hand — hot, slow, and not something a 10-year-old should hold. A press does the same job with squarer, more consistent inserts and no hot tip near little hands. Anywhere the guide calls for the soldering iron and insert tips, use the press instead.
+      </div>
+
+      <div class="complete-row">
+        <input type="checkbox" id="session-1-done">
+        <label for="session-1-done">Mark Session 1 complete</label>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Instructions, part designs, and diagrams reproduced above are from the CURV LAB "Chassis Build Guide WR1, Version 2" — © CURV LAB, used here for our own build reference only. Get the original at <a href="https://www.curvlab.com/wr1" target="_blank" rel="noopener">curvlab.com/wr1</a>.</p>
+  <p><a href="../">&larr; Back to the shopping list</a> · <a href="https://github.com/kms254/wr1" target="_blank" rel="noopener">wr1 on GitHub</a></p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'wr1-cart:build:session-1';
+  var box = document.getElementById('session-1-done');
+  var card = document.getElementById('session-1-card');
+
+  function paint() { card.classList.toggle('is-done', box.checked); }
+
+  try { box.checked = localStorage.getItem(KEY) === '1'; } catch (e) {}
+  paint();
+
+  box.addEventListener('change', function () {
+    try {
+      if (box.checked) localStorage.setItem(KEY, '1');
+      else localStorage.removeItem(KEY);
+    } catch (e) {}
+    paint();
+  });
+})();
+</script>
+
+</body>
+</html>
