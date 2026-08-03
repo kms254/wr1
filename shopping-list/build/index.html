@@ -1954,7 +1954,7 @@
   (function () {
     var saved = null;
     try { saved = localStorage.getItem(BRAND_KEY); } catch (e) {}
-    applyBrand(saved === 'curv' ? saved : 'track');
+    applyBrand(saved === 'track' ? saved : 'curv');
   })();
 })();
 </script>

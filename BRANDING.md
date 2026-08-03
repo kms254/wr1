@@ -8,7 +8,19 @@ free — nothing to rewrite per-component.
 Live reference with swatches, type, and component examples: **[`/brand/`](shopping-list/brand/index.html)**
 (deployed at `https://kms254.github.io/wr1/brand/`).
 
-## Track — default
+## Curv — default, matches curvlab.com
+
+Pulled from CURV LAB's actual site (curvlab.com — the studio behind the WR1
+build this repo tracks), so this tool can sit next to their own pages
+without clashing. Their real identity has **no accent color at all**: an
+off-white ground, near-black text and nav, warm-grey secondary text, and
+plain text-link CTAs rather than filled colored buttons — restrained by
+design, "less-is-more." Curv reproduces that by making the "accent" itself
+monochrome: buttons are ink-filled, not color-filled. Corners are also
+tightened (6px vs. Track's 10px) for a more architectural, less-rounded
+feel, matching their clean-grid, gallery-like layout.
+
+## Track — alternate
 
 Blue / black / grey. One livery, meant to read the same whether the car
 underneath it is the black build or the blue one — this is the shared brand,
@@ -35,18 +47,6 @@ that's data.
 "arrived" and "needs attention" everywhere in both brands and don't shift
 with the theme. Only `--accent` carries the brand's identity color.
 
-## Curv — matches curvlab.com
-
-Pulled from CURV LAB's actual site (curvlab.com — the studio behind the WR1
-build this repo tracks), so this tool can sit next to their own pages
-without clashing. Their real identity has **no accent color at all**: an
-off-white ground, near-black text and nav, warm-grey secondary text, and
-plain text-link CTAs rather than filled colored buttons — restrained by
-design, "less-is-more." Curv reproduces that by making the "accent" itself
-monochrome: buttons are ink-filled, not color-filled. Corners are also
-tightened (6px vs. Track's 10px) for a more architectural, less-rounded
-feel, matching their clean-grid, gallery-like layout.
-
 | Token | Light | Dark |
 |---|---|---|
 | `--ink` | `#111111` | `#f2f1ee` |
@@ -65,13 +65,13 @@ monochrome mood.
 
 Every themed page sets tokens three ways, same pattern both brands follow:
 
-1. `:root { ... }` — the default (Track, light).
+1. `:root { ... }` — the default (Curv, light).
 2. `@media (prefers-color-scheme: dark) { :root { ... } }` — follows the OS/browser.
 3. `:root[data-theme="dark"]` / `:root[data-theme="light"]` — forces a mode, overriding #2, for a manual light/dark toggle.
 
-Curv repeats the same three rules scoped under `:root[data-brand="curv"]`.
-Switching brands is just setting `data-brand="track"` (or removing the
-attribute) vs `data-brand="curv"` on `<html>`. The shopping list's brand
+Track repeats the same three rules scoped under `:root[data-brand="track"]`.
+Switching brands is just setting `data-brand="curv"` (or removing the
+attribute) vs `data-brand="track"` on `<html>`. The shopping list's brand
 switcher — a small pill in the top-right of the header — does exactly this
 and remembers the choice in `localStorage` (`wr1-cart:brand`), shared with
 `/brand/` so switching on either page carries over to the other.

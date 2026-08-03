@@ -1272,7 +1272,7 @@
   var savedFilter = read(FILTER_KEY);
   if (savedFilter === 'toorder' || savedFilter === 'transit') filter = savedFilter;
 
-  /* ---- Brand switch (Track default / Curv) ---- */
+  /* ---- Brand switch (Curv default / Track) ---- */
   var brandButtons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
   function applyBrand(b) {
     document.documentElement.setAttribute('data-brand', b);
@@ -1290,7 +1290,7 @@
   });
   (function () {
     var saved = read(BRAND_KEY);
-    applyBrand(saved === 'curv' ? saved : 'track');
+    applyBrand(saved === 'track' ? saved : 'curv');
   })();
 
   /* ---- Tallies ---- */

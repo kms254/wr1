@@ -5,10 +5,46 @@
    see "Adding a fourth brand" in BRANDING.md. */
 
 /* ============================================================
-   Brand: Track (default) — blue / black / grey, one livery per
-   future car.
+   Brand: Curv (default) — matches curvlab.com itself: monochrome,
+   no accent color, Poppins, sharper corners. Clarkson (their heading
+   face) is a Squarespace-exclusive font we can't license, so headings
+   use Poppins Bold instead — same geometric character, openly licensed.
    ============================================================ */
 :root {
+  --ink: #111111; --ink-soft: #6b6b68; --paper: #fafaf8; --card: #ffffff;
+  --line: #e3e2df; --line-soft: #eeeeec; --accent: #111111; --accent-ink: #ffffff;
+  --accent-soft: #ececea; --good: #3f6b4c; --good-soft: #e7ece8; --warn: #8a3b2e; --warn-soft: #f1e6e3;
+  --shadow: 0 1px 2px rgba(17,17,17,0.05), 0 8px 20px -12px rgba(17,17,17,0.14);
+  --radius: 6px;
+  --font-sans: 'Poppins', ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f2f1ee; --ink-soft: #a3a29d; --paper: #0e0e0d; --card: #1a1a18;
+    --line: #2c2c29; --line-soft: #201f1d; --accent: #f2f1ee; --accent-ink: #111111;
+    --accent-soft: #262624; --good: #6f9c7d; --good-soft: #1c2620; --warn: #c17b68; --warn-soft: #2e1f1a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 26px -14px rgba(0,0,0,0.55);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #f2f1ee; --ink-soft: #a3a29d; --paper: #0e0e0d; --card: #1a1a18;
+  --line: #2c2c29; --line-soft: #201f1d; --accent: #f2f1ee; --accent-ink: #111111;
+  --accent-soft: #262624; --good: #6f9c7d; --good-soft: #1c2620; --warn: #c17b68; --warn-soft: #2e1f1a;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 26px -14px rgba(0,0,0,0.55);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --ink: #111111; --ink-soft: #6b6b68; --paper: #fafaf8; --card: #ffffff;
+  --line: #e3e2df; --line-soft: #eeeeec; --accent: #111111; --accent-ink: #ffffff;
+  --accent-soft: #ececea; --good: #3f6b4c; --good-soft: #e7ece8; --warn: #8a3b2e; --warn-soft: #f1e6e3;
+  --shadow: 0 1px 2px rgba(17,17,17,0.05), 0 8px 20px -12px rgba(17,17,17,0.14);
+  color-scheme: light;
+}
+
+/* ---- Brand: Track — blue / black / grey, one livery per future car. ---- */
+:root[data-brand="track"] {
   --ink: #14171c;
   --ink-soft: #565f6b;
   --paper: #eef0f3;
@@ -28,7 +64,7 @@
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root[data-brand="track"] {
     --ink: #eef1f5;
     --ink-soft: #99a2ae;
     --paper: #0c0f13;
@@ -46,55 +82,18 @@
     color-scheme: dark;
   }
 }
-:root[data-theme="dark"] {
+:root[data-brand="track"][data-theme="dark"] {
   --ink: #eef1f5; --ink-soft: #99a2ae; --paper: #0c0f13; --card: #171b21;
   --line: #2b313a; --line-soft: #1f242b; --accent: #5b93ff; --accent-ink: #0b1220;
   --accent-soft: #1c2b46; --good: #7fb88f; --good-soft: #1c2a21; --warn: #e2705a; --warn-soft: #3a2119;
   --shadow: 0 1px 2px rgba(0,0,0,0.45), 0 12px 28px -14px rgba(0,0,0,0.65);
   color-scheme: dark;
 }
-:root[data-theme="light"] {
+:root[data-brand="track"][data-theme="light"] {
   --ink: #14171c; --ink-soft: #565f6b; --paper: #eef0f3; --card: #ffffff;
   --line: #d6dae1; --line-soft: #e6e9ed; --accent: #1c5adb; --accent-ink: #ffffff;
   --accent-soft: #dde8fb; --good: #3c7a54; --good-soft: #e1efe4; --warn: #c23b2c; --warn-soft: #fbe4e0;
   --shadow: 0 1px 2px rgba(20,23,28,0.06), 0 8px 24px -12px rgba(20,23,28,0.16);
-  color-scheme: light;
-}
-
-/* ---- Brand: Curv — matches curvlab.com itself: monochrome, no accent
-   color, Poppins, sharper corners. Clarkson (their heading face) is a
-   Squarespace-exclusive font we can't license, so headings use Poppins
-   Bold instead — same geometric character, openly licensed. ---- */
-:root[data-brand="curv"] {
-  --ink: #111111; --ink-soft: #6b6b68; --paper: #fafaf8; --card: #ffffff;
-  --line: #e3e2df; --line-soft: #eeeeec; --accent: #111111; --accent-ink: #ffffff;
-  --accent-soft: #ececea; --good: #3f6b4c; --good-soft: #e7ece8; --warn: #8a3b2e; --warn-soft: #f1e6e3;
-  --shadow: 0 1px 2px rgba(17,17,17,0.05), 0 8px 20px -12px rgba(17,17,17,0.14);
-  --radius: 6px;
-  --font-sans: 'Poppins', ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root[data-brand="curv"] {
-    --ink: #f2f1ee; --ink-soft: #a3a29d; --paper: #0e0e0d; --card: #1a1a18;
-    --line: #2c2c29; --line-soft: #201f1d; --accent: #f2f1ee; --accent-ink: #111111;
-    --accent-soft: #262624; --good: #6f9c7d; --good-soft: #1c2620; --warn: #c17b68; --warn-soft: #2e1f1a;
-    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 26px -14px rgba(0,0,0,0.55);
-    color-scheme: dark;
-  }
-}
-:root[data-brand="curv"][data-theme="dark"] {
-  --ink: #f2f1ee; --ink-soft: #a3a29d; --paper: #0e0e0d; --card: #1a1a18;
-  --line: #2c2c29; --line-soft: #201f1d; --accent: #f2f1ee; --accent-ink: #111111;
-  --accent-soft: #262624; --good: #6f9c7d; --good-soft: #1c2620; --warn: #c17b68; --warn-soft: #2e1f1a;
-  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 26px -14px rgba(0,0,0,0.55);
-  color-scheme: dark;
-}
-:root[data-brand="curv"][data-theme="light"] {
-  --ink: #111111; --ink-soft: #6b6b68; --paper: #fafaf8; --card: #ffffff;
-  --line: #e3e2df; --line-soft: #eeeeec; --accent: #111111; --accent-ink: #ffffff;
-  --accent-soft: #ececea; --good: #3f6b4c; --good-soft: #e7ece8; --warn: #8a3b2e; --warn-soft: #f1e6e3;
-  --shadow: 0 1px 2px rgba(17,17,17,0.05), 0 8px 20px -12px rgba(17,17,17,0.14);
   color-scheme: light;
 }
 
