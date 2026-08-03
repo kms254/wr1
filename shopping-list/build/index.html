@@ -1660,18 +1660,20 @@
       </div>
 
       <div class="swap-note">
-        <b>⚠ Field modification — not in the official guide, adult-led.</b>
+        <b>⚠ Field modification — not in the official guide. Kid solders, with very hands-on adult supervision.</b>
         The ESC ships with a stock XT60 connector, but the Zeee battery we ordered (see shopping list) is EC5-terminated —
         XT60-terminated batteries are hard to get shipped to the US right now, so we're converting the ESC's connector to
-        EC5 instead of chasing the "correct" one. Because this means desoldering, resoldering, and getting battery polarity
-        right, <b>this is a solder-and-multimeter job for the adult, done before Step 1 below</b> — no official CURV LAB
-        diagram covers it, so the two images here are our own reference drawings, not guide pages.
+        EC5 instead of chasing the "correct" one. This is the first time soldering shows up in the build — a real new
+        skill, worth letting her hold the iron — but a hot tip and battery polarity mean an adult stays right there
+        guiding her hands the whole time, not just watching from across the room. The <b>final polarity check with a
+        multimeter, done before Step E, is the adult's alone</b> — no official CURV LAB diagram covers any of this, so
+        the two images here are our own reference drawings, not guide pages.
       </div>
 
       <p class="subhead">Converting the ESC connector (do this first, on the bench)</p>
       <div class="materials">
         <div class="material"><div class="m-name">EC5 Connector Set (Amass)</div><div class="m-qty">1 pair · the "DEV" male-pin half</div></div>
-        <div class="material"><div class="m-name">Soldering iron</div><div class="m-qty">50W+ — Hobbywing's own manual calls for this minimum</div></div>
+        <div class="material"><div class="m-name">Soldering iron — <a href="https://fanttik.com/products/fanttik-t1-max-soldering-iron-kit" target="_blank" rel="noopener">Fanttik T1 Max</a></div><div class="m-qty">Already own. Hobbywing's manual calls for 50W+ on ESC leads; the T1 Max tops out at 16W wired — go slow, keep the tip on each joint longer, and confirm the solder has fully wetted and gone shiny before moving on.</div></div>
         <div class="material"><div class="m-name">Heat shrink tubing</div><div class="m-qty">2 pieces, sized for the ESC leads</div></div>
         <div class="material"><div class="m-name">Wire strippers</div><div class="m-qty">—</div></div>
         <div class="material"><div class="m-name">Multimeter</div><div class="m-qty">to verify polarity before first connection</div></div>
@@ -1692,7 +1694,7 @@
         <div class="step">
           <div class="step-num">B</div>
           <div class="step-body">
-            <p>Strip about 1/4" (6mm) of insulation from each of the two wires, then tin the exposed strands with a little solder.</p>
+            <p>Strip about 1/4" (6mm) of insulation from each of the two wires, then tin the exposed strands with a little solder — first time with the iron, so an adult guides your hand on this one.</p>
           </div>
         </div>
 
@@ -1706,7 +1708,7 @@
         <div class="step">
           <div class="step-num">D</div>
           <div class="step-body">
-            <p>Solder the red wire into the pin marked <b>+</b> and the black wire into the pin marked <b>−</b> on the EC5 "DEV" connector (the male-pin half) from the Amass set — match the markings printed on the plastic housing, don't guess.</p>
+            <p>Solder the red wire into the pin marked <b>+</b> and the black wire into the pin marked <b>−</b> on the EC5 "DEV" connector (the male-pin half) from the Amass set — match the markings printed on the plastic housing, don't guess. Same as Step B: adult hands guide yours on the iron.</p>
             <figure class="step-fig">
               <img src="images/xt60-ec5-converted.svg" alt="Diagram showing the ESC lead now terminated in an EC5 DEV connector with male pins, mating correctly with the battery's EC5 BATT connector, positive to positive and negative to negative" loading="lazy">
               <figcaption>Reference diagram — not from the official guide.</figcaption>
@@ -1717,7 +1719,7 @@
         <div class="step">
           <div class="step-num">E</div>
           <div class="step-body">
-            <p>Shrink the tubing over each joint, then <b>check polarity with a multimeter against the battery's own EC5 plug before ever connecting a battery.</b> Reversed polarity destroys the ESC and isn't covered under warranty — this check is what actually catches a soldering mistake before it costs you an ESC.</p>
+            <p>Shrink the tubing over each joint, then — <b>this part's the adult's alone</b> — check polarity with a multimeter against the battery's own EC5 plug before ever connecting a battery. Reversed polarity destroys the ESC and isn't covered under warranty; this check is what actually catches a soldering mistake before it costs you an ESC.</p>
           </div>
         </div>
 
