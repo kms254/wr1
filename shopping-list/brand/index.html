@@ -24,12 +24,13 @@
   /* ---- Segmented control (also used live by the brand switcher in .site-nav) ---- */
   .seg { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
   .seg button {
-    font: inherit; font-size: 12px; padding: 6px 14px; border: 0; border-right: 1px solid var(--line);
+    font: inherit; font-size: 12px; padding: 5px 12px; border: 0; border-right: 1px solid var(--line);
     background: none; color: var(--ink-soft); cursor: pointer; white-space: nowrap;
   }
   .seg button:last-child { border-right: 0; }
   .seg button:hover { color: var(--accent); }
   .seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 650; }
+  .seg button.on:hover { color: var(--accent-ink); }
   /* ---- Sections ---- */
   section.block { margin-top: 48px; }
   .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
@@ -72,7 +73,7 @@
   .btn-secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: var(--radius); cursor: pointer; }
 
   .demo-flags { display: flex; gap: 8px; flex-wrap: wrap; }
-  .flag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--warn); background: var(--warn-soft); padding: 3px 8px; border-radius: 5px; }
+  .flag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--warn); background: var(--warn-soft); padding: 2px 7px; border-radius: 5px; margin-bottom: 6px; }
   .flag.good { color: var(--good); background: var(--good-soft); }
 
   .demo-seg .seg { margin-top: 2px; }
@@ -124,7 +125,7 @@
 <header class="hero">
   <p class="eyebrow">WR1 · CURV LAB Chassis Build</p>
   <h1>Brand Guide</h1>
-  <p class="sub">Two color systems for the WR1 tools in this repo, both built from the same eleven-token structure — pick one in the menu above to see it live in the type and component sections below. Written version with rationale: <a href="https://github.com/kms254/wr1/blob/main/BRANDING.md" target="_blank" rel="noopener">BRANDING.md</a>.</p>
+  <p class="sub">Two color systems for the WR1 tools in this repo, both built from the same 16-token structure — pick one in the menu above to see it live in the type and component sections below. Written version with rationale: <a href="https://github.com/kms254/wr1/blob/main/BRANDING.md" target="_blank" rel="noopener">BRANDING.md</a>.</p>
 </header>
 
 <div class="wrap">

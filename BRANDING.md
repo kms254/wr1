@@ -119,8 +119,9 @@ examples of each:
 ## Adding a third brand
 
 Copy the Curv block, rename `data-brand="curv"` to your new key, pick new
-values for the twelve tokens above (keep `--good`/`--warn` semantic — don't
-reassign their meaning; only override `--font-sans` or `--radius` if the
-brand genuinely calls for a different typeface or corner treatment), and add
-a button to `.brand-seg` with a matching `data-brand-choice`. Nothing else
-needs to change.
+values for the tokens above (16 total per brand in `theme.css` — the table
+above covers the ones you'll actually touch; keep `--good`/`--warn` semantic
+and don't reassign their meaning; only override `--font-sans` or `--radius`
+if the brand genuinely calls for a different typeface or corner treatment),
+and add a button to `.brand-seg` with a matching `data-brand-choice`. Nothing
+else needs to change.
