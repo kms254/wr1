@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WR1 — Parent Guide: Cost &amp; What She's Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px 96px; }
+
+  header.hero { padding: 40px 20px 24px; max-width: 900px; margin: 0 auto; }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 10px;
+  }
+  h1 { font-size: clamp(26px, 4.2vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
+  .sub { color: var(--ink-soft); font-size: 15px; max-width: 66ch; margin: 0; line-height: 1.6; }
+
+  section.card { margin-top: 24px; }
+  .card-inner {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 24px 28px; box-shadow: var(--shadow);
+  }
+  .card-inner h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 4px; }
+  .card-inner .card-sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 18px; line-height: 1.55; }
+
+  .subhead { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 700; margin: 22px 0 12px; }
+  .subhead:first-of-type { margin-top: 0; }
+
+  /* ---- Cost comparison ---- */
+  .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .cost-grid { grid-template-columns: 1fr; } }
+  .cost-box { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; background: var(--paper); }
+  .cost-box.win { border-color: color-mix(in srgb, var(--good) 45%, var(--line)); background: var(--good-soft); }
+  .cost-box .cb-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--ink-soft); }
+  .cost-box.win .cb-label { color: var(--good); }
+  .cost-box .cb-num { font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; font-size: 30px; font-weight: 800; margin: 4px 0 6px; letter-spacing: -0.01em; }
+  .cost-box .cb-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  .ledger { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 13px; line-height: 1.55; }
+  .ledger:last-child { border-bottom: 0; }
+  .ledger .led-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; margin-top: 6px; }
+  .ledger b { color: var(--ink); }
+
+  .caveat {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 12px 14px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); margin-top: 16px;
+  }
+  .caveat b { color: var(--ink); }
+
+  /* ---- Learning topics ---- */
+  .topic-groups { display: flex; flex-direction: column; gap: 22px; }
+  .topic-group .tg-title { font-weight: 800; font-size: 14px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+  .topic-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+  .topic {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; font-size: 12.5px; line-height: 1.5;
+  }
+  .topic .t-name { font-weight: 650; color: var(--ink); }
+  .topic .t-where { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+
+  .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  .cta-row a {
+    font-weight: 650; font-size: 13px; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink);
+    padding: 9px 16px; border-radius: 999px;
+  }
+  .cta-row a.secondary { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+  .cta-row a:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><div class="site-nav-inner">
+  <div class="site-nav-links">
+    <a href="../">Shopping List</a>
+    <a href="../build/">Build Guide</a>
+    <a href="../programming/">ESC Setup</a>
+    <a href="./" class="on">Parent Guide</a>
+    <a href="../brand/">Brand Guide</a>
+  </div>
+  <div class="seg brand-seg" role="group" aria-label="Color theme">
+    <button type="button" data-brand-choice="track">Track</button>
+    <button type="button" data-brand-choice="curv">Curv</button>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <p class="eyebrow">WR1 · For the parent, not the builder</p>
+  <h1>What this actually costs, and what she's learning</h1>
+  <p class="sub">A one-page case for why this build is worth considering next to a week of summer camp — real numbers from our own shopping list, not marketing copy.</p>
+</header>
+
+<div class="wrap">
+
+  <section class="card">
+    <div class="card-inner">
+      <h2>The cost, honestly</h2>
+      <p class="card-sub">Every number below is computed straight from the <a href="../">shopping list</a>'s real prices and quantities — nothing rounded up for effect.</p>
+
+      <div class="cost-grid">
+        <div class="cost-box win">
+          <div class="cb-label">Building one car</div>
+          <div class="cb-num">~$619</div>
+          <div class="cb-note">Our real 2026 sourcing run, adjusted down from the 2-car total below for parts that were bought as fixed pairs (the second car's motor/ESC combo, transmitter kit, and color-matched link set). CURV LAB's own guide separately estimates <b>~$600</b> in hardware for one build — close enough to trust both numbers.</div>
+        </div>
+        <div class="cost-box">
+          <div class="cb-label">STEM / robotics camp, one week</div>
+          <div class="cb-num">$400–$1,200</div>
+          <div class="cb-note">Typical range for a one-week day camp in 2026 (regional averages cluster around $500–$900/week); overnight programs run $1,800–$3,000/week. She keeps a week of memories. She doesn't keep a robotics camp.</div>
+        </div>
+      </div>
+
+      <div class="caveat">
+        <b>What's not in these numbers:</b> a 3D printer (we already owned a Bambu X1C — budget for one if you don't), PETG-HF filament (~365g per car, a few dollars' worth), and CURV LAB's own print files (bought once from their store, not tracked on our shopping list). What <i>is</i> in the number: every fastener, bearing, electronic, and consumable on the real list, at what we actually paid for two cars — <b>$1,100.51</b> total, verified line by line.
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-inner">
+      <h2>What she's actually learning</h2>
+      <p class="card-sub">Every topic below is a real checkpoint in the <a href="../build/">build guide</a> — a short video, a hands-on step, or a reveal-answer question at the point where it's actually relevant, not a lecture bolted on top.</p>
+
+      <div class="topic-groups">
+
+        <div class="topic-group">
+          <p class="tg-title">⚙️ Mechanical engineering</p>
+          <div class="topic-list">
+            <div class="topic"><div class="t-name">Differentials — why a car needs one</div><div class="t-where">Session 3</div></div>
+            <div class="topic"><div class="t-name">Pinion/spur gear meshing</div><div class="t-where">Session 7</div></div>
+            <div class="topic"><div class="t-name">Four-bar linkage suspension</div><div class="t-where">Session 9</div></div>
+            <div class="topic"><div class="t-name">Bearings and why they're everywhere</div><div class="t-where">Session 11</div></div>
+            <div class="topic"><div class="t-name">Ackermann steering geometry</div><div class="t-where">Session 12</div></div>
+            <div class="topic"><div class="t-name">Independent suspension geometry</div><div class="t-where">Session 14</div></div>
+            <div class="topic"><div class="t-name">Spring vs. damper</div><div class="t-where">Session 14</div></div>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <p class="tg-title">🔌 Electronics &amp; power</p>
+          <div class="topic-list">
+            <div class="topic"><div class="t-name">How a DC motor works</div><div class="t-where">Session 7</div></div>
+            <div class="topic"><div class="t-name">PWM &amp; what an ESC actually does</div><div class="t-where">Session 7, 15</div></div>
+            <div class="topic"><div class="t-name">How servos work</div><div class="t-where">Session 8</div></div>
+            <div class="topic"><div class="t-name">Transmitters &amp; receivers</div><div class="t-where">Session 15</div></div>
+            <div class="topic"><div class="t-name">Battery polarity &amp; connector conversion</div><div class="t-where">Session 15</div></div>
+            <div class="topic"><div class="t-name">ESC calibration &amp; parameter programming</div><div class="t-where"><a href="../programming/">ESC Setup guide</a></div></div>
+            <div class="topic"><div class="t-name">ESC/receiver/servo/battery, how they work together</div><div class="t-where">Session 15 capstone</div></div>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <p class="tg-title">🧪 Materials science</p>
+          <div class="topic-list">
+            <div class="topic"><div class="t-name">PLA vs. PETG-HF — why the material choice matters</div><div class="t-where">Before you start</div></div>
+            <div class="topic"><div class="t-name">Filament hygroscopicity — why wet plastic breaks parts</div><div class="t-where">Before you start</div></div>
+            <div class="topic"><div class="t-name">Threadlockers — how a coating stops vibration without gluing</div><div class="t-where">Session 3</div></div>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <p class="tg-title">🛠 Real-world skills</p>
+          <div class="topic-list">
+            <div class="topic"><div class="t-name">Reading a technical assembly diagram</div><div class="t-where">Every session</div></div>
+            <div class="topic"><div class="t-name">Heat-set inserts with a press</div><div class="t-where">Sessions 1, 3–6, 12</div></div>
+            <div class="topic"><div class="t-name">Working carefully with fluids near tolerance-fit parts</div><div class="t-where">Sessions 3–6</div></div>
+            <div class="topic"><div class="t-name">Checking your own work before moving on</div><div class="t-where">Every session's "Check it" step</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ledger" style="margin-top:22px; border-top: 1px solid var(--line-soft); padding-top:16px;">
+        <div class="led-dot"></div>
+        <div>Sixteen sessions, roughly 30 minutes each — about <b>8 hours of hands-on time together</b>, spread over as many weeks as you want, instead of one condensed week away from you.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-row">
+    <a href="../build/">Start the build guide</a>
+    <a class="secondary" href="../">See the shopping list</a>
+    <a class="secondary" href="../programming/">ESC setup guide</a>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var BRAND_KEY = 'wr1-cart:brand';
+  var brandButtons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
+  function applyBrand(b) {
+    document.documentElement.setAttribute('data-brand', b);
+    brandButtons.forEach(function (btn) {
+      var on = btn.getAttribute('data-brand-choice') === b;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try { localStorage.setItem(BRAND_KEY, b); } catch (e) {}
+  }
+  brandButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () { applyBrand(btn.getAttribute('data-brand-choice')); });
+  });
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(BRAND_KEY); } catch (e) {}
+    applyBrand(saved === 'track' ? saved : 'curv');
+  })();
+})();
+</script>
+</body>
+</html>

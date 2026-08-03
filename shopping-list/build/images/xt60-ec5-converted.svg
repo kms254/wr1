@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <rect x="0" y="0" width="640" height="300" fill="#fbfbf9"/>
+
+  <!-- ESC side, converted -->
+  <text x="150" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="#111111">ESC lead (converted)</text>
+  <line x1="30" y1="150" x2="150" y2="150" stroke="#c23b2c" stroke-width="6" stroke-linecap="round"/>
+  <line x1="30" y1="166" x2="150" y2="166" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+  <g>
+    <rect x="150" y="122" width="100" height="68" rx="10" fill="#dfe6ea" stroke="#5b6b75" stroke-width="2"/>
+    <text x="200" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#3c4a52">EC5 · DEV</text>
+    <circle cx="180" cy="158" r="8" fill="#b8342a"/>
+    <text x="180" y="162" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">+</text>
+    <circle cx="220" cy="158" r="8" fill="#2c2c2c"/>
+    <text x="220" y="162" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">−</text>
+    <text x="200" y="182" text-anchor="middle" font-size="10" fill="#5b6b75">male pins</text>
+  </g>
+
+  <!-- mate / check -->
+  <g transform="translate(320,156)">
+    <circle r="26" fill="#e1efe4" stroke="#3c7a54" stroke-width="2.5"/>
+    <path d="M -11 1 L -3 10 L 12 -9" fill="none" stroke="#3c7a54" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="320" y="210" text-anchor="middle" font-size="12.5" font-weight="700" fill="#3c7a54">Plugs together, + to +</text>
+
+  <!-- Battery side -->
+  <text x="490" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="#111111">Battery lead (stock)</text>
+  <line x1="610" y1="150" x2="490" y2="150" stroke="#c23b2c" stroke-width="6" stroke-linecap="round"/>
+  <line x1="610" y1="166" x2="490" y2="166" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+  <g>
+    <rect x="390" y="122" width="100" height="68" rx="10" fill="#dfe6ea" stroke="#5b6b75" stroke-width="2"/>
+    <text x="440" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#3c4a52">EC5 · BATT</text>
+    <circle cx="420" cy="158" r="8" fill="#b8342a"/>
+    <text x="420" y="162" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">+</text>
+    <circle cx="460" cy="158" r="8" fill="#2c2c2c"/>
+    <text x="460" y="162" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">−</text>
+    <text x="440" y="182" text-anchor="middle" font-size="10" fill="#5b6b75">female pins</text>
+  </g>
+
+  <text x="320" y="248" text-anchor="middle" font-size="12.5" fill="#565f6b">Both housings are printed with + and − — match them before you ever plug in a battery.</text>
+  <text x="320" y="266" text-anchor="middle" font-size="12.5" fill="#565f6b">Check polarity with a multimeter first. Reversed = the ESC is destroyed, no warranty.</text>
+  <text x="320" y="288" text-anchor="middle" font-size="11" fill="#9aa0a6">Reference diagram — not from the official CURV LAB guide</text>
+</svg>

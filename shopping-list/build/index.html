@@ -208,6 +208,8 @@
   <div class="site-nav-links">
     <a href="../">Shopping List</a>
     <a href="./" class="on">Build Guide</a>
+    <a href="../programming/">ESC Setup</a>
+    <a href="../parent-guide/">Parent Guide</a>
     <a href="../brand/">Brand Guide</a>
   </div>
   <div class="seg brand-seg" role="group" aria-label="Color theme">
@@ -1657,6 +1659,70 @@
         <b>No inserts here</b> — this session is tape, straps, and 2 screws. This is the wiring session: everything electrical goes in.
       </div>
 
+      <div class="swap-note">
+        <b>⚠ Field modification — not in the official guide, adult-led.</b>
+        The ESC ships with a stock XT60 connector, but the Zeee battery we ordered (see shopping list) is EC5-terminated —
+        XT60-terminated batteries are hard to get shipped to the US right now, so we're converting the ESC's connector to
+        EC5 instead of chasing the "correct" one. Because this means desoldering, resoldering, and getting battery polarity
+        right, <b>this is a solder-and-multimeter job for the adult, done before Step 1 below</b> — no official CURV LAB
+        diagram covers it, so the two images here are our own reference drawings, not guide pages.
+      </div>
+
+      <p class="subhead">Converting the ESC connector (do this first, on the bench)</p>
+      <div class="materials">
+        <div class="material"><div class="m-name">EC5 Connector Set (Amass)</div><div class="m-qty">1 pair · the "DEV" male-pin half</div></div>
+        <div class="material"><div class="m-name">Soldering iron</div><div class="m-qty">50W+ — Hobbywing's own manual calls for this minimum</div></div>
+        <div class="material"><div class="m-name">Heat shrink tubing</div><div class="m-qty">2 pieces, sized for the ESC leads</div></div>
+        <div class="material"><div class="m-name">Wire strippers</div><div class="m-qty">—</div></div>
+        <div class="material"><div class="m-name">Multimeter</div><div class="m-qty">to verify polarity before first connection</div></div>
+      </div>
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">A</div>
+          <div class="step-body">
+            <p>With the ESC unplugged from everything, cut the stock XT60 connector off the ESC's battery leads, leaving as much wire length as you can.</p>
+            <figure class="step-fig">
+              <img src="images/xt60-ec5-mismatch.svg" alt="Diagram showing the ESC's stock XT60 connector next to the battery's EC5 connector, with a mismatch symbol between them since the two shapes cannot plug together" loading="lazy">
+              <figcaption>Reference diagram — not from the official guide.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">B</div>
+          <div class="step-body">
+            <p>Strip about 1/4" (6mm) of insulation from each of the two wires, then tin the exposed strands with a little solder.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">C</div>
+          <div class="step-body">
+            <p>Slide a piece of heat-shrink tubing onto each wire <i>before</i> soldering — easy to forget, hard to add after the joint is made.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">D</div>
+          <div class="step-body">
+            <p>Solder the red wire into the pin marked <b>+</b> and the black wire into the pin marked <b>−</b> on the EC5 "DEV" connector (the male-pin half) from the Amass set — match the markings printed on the plastic housing, don't guess.</p>
+            <figure class="step-fig">
+              <img src="images/xt60-ec5-converted.svg" alt="Diagram showing the ESC lead now terminated in an EC5 DEV connector with male pins, mating correctly with the battery's EC5 BATT connector, positive to positive and negative to negative" loading="lazy">
+              <figcaption>Reference diagram — not from the official guide.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">E</div>
+          <div class="step-body">
+            <p>Shrink the tubing over each joint, then <b>check polarity with a multimeter against the battery's own EC5 plug before ever connecting a battery.</b> Reversed polarity destroys the ESC and isn't covered under warranty — this check is what actually catches a soldering mistake before it costs you an ESC.</p>
+          </div>
+        </div>
+
+      </div>
+
       <p class="subhead">What you need</p>
       <div class="materials">
         <div class="material"><div class="m-name">ESC Plate</div><div class="m-qty">qty 1 · printed</div></div>
@@ -1738,6 +1804,7 @@
           <div class="step-num">6</div>
           <div class="step-body">
             <p>With an adult, connect the servo and ESC to the receiver's labeled channels, then — <b>only when everything else is checked</b> — plug in the battery for the first time.</p>
+            <p style="margin-top:10px;">Before that first drive, the ESC needs its throttle range calibrated and its parameters set — see the <a href="../programming/">ESC Programming Guide</a> for the full walkthrough with the LED Program Card.</p>
           </div>
         </div>
 

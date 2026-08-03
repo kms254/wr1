@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WR1 — ESC Programming Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px 96px; }
+
+  header.hero { padding: 40px 20px 24px; max-width: 900px; margin: 0 auto; }
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 10px;
+  }
+  h1 { font-size: clamp(26px, 4.2vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
+  .sub { color: var(--ink-soft); font-size: 15px; max-width: 66ch; margin: 0; line-height: 1.6; }
+
+  .credit {
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin: 24px 20px 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .credit b { color: var(--ink); }
+  .credit .credit-links { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .credit .credit-links a {
+    font-weight: 650; font-size: 12.5px; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .credit .credit-links a:hover { opacity: 0.88; }
+
+  .swap-note {
+    background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line));
+    border-radius: var(--radius); padding: 14px 16px; font-size: 13px; line-height: 1.6; margin: 24px 0 0;
+  }
+  .swap-note b { color: var(--warn); }
+
+  section.card { margin-top: 24px; }
+  .card-inner {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 24px 28px; box-shadow: var(--shadow);
+  }
+  .card-inner h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 4px; }
+  .card-inner .card-sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 18px; line-height: 1.55; }
+
+  .subhead { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 700; margin: 22px 0 12px; }
+  .subhead:first-of-type { margin-top: 0; }
+
+  .step-list { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
+  .step { display: grid; grid-template-columns: 32px 1fr; gap: 12px; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex: none;
+  }
+  .step-body { padding-top: 3px; }
+  .step-body p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+
+  .param-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+  .param-table th, .param-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  .param-table th { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 700; }
+  .param-table td.pname { font-weight: 650; }
+  .param-table td.pdefault { white-space: nowrap; }
+  .table-scroll { overflow-x: auto; }
+
+  .ledger { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 13px; line-height: 1.55; }
+  .ledger:last-child { border-bottom: 0; }
+  .ledger .led-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav"><div class="site-nav-inner">
+  <div class="site-nav-links">
+    <a href="../">Shopping List</a>
+    <a href="../build/">Build Guide</a>
+    <a href="./" class="on">ESC Setup</a>
+    <a href="../parent-guide/">Parent Guide</a>
+    <a href="../brand/">Brand Guide</a>
+  </div>
+  <div class="seg brand-seg" role="group" aria-label="Color theme">
+    <button type="button" data-brand-choice="track">Track</button>
+    <button type="button" data-brand-choice="curv">Curv</button>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <p class="eyebrow">WR1 · Session 15 Companion</p>
+  <h1>ESC Programming Guide</h1>
+  <p class="sub">How to set up the <b>Hobbywing QuicRun WP 10BL120 G2</b> ESC that comes in the Motor / ESC Combo, using the <b>Hobbywing LED Program Card</b> from the shopping list. This isn't in CURV LAB's build guide at all — it's Hobbywing's own setup process, condensed from their official manual into one page.</p>
+</header>
+
+<div class="credit">
+  <b>Sourced from Hobbywing's own manual</b> for the QuicRun 10BL60 &amp; 10BL120 G2 (Sensored), not from CURV LAB. We read it end to end and pulled out just what applies to this build.
+  <div class="credit-links">
+    <a href="https://www.hobbywing.com/en/uploads/file/20231109/285dfb08a60eebbb987bd2379c88bd07.pdf" target="_blank" rel="noopener">Official manual (PDF)</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="swap-note" style="margin-top:24px;">
+    <b>⚠ Adult-led, wheels off the ground.</b> Hobbywing's manual says it directly: remove the pinion gear before calibrating or programming if you can, and always keep the wheels in the air when the ESC is powered on for this — a full-power motor with nothing to grip isn't something a first-time driver should be holding. Also: connect the battery only with the ESC switched off, and match <b>+ to +</b> and <b>− to −</b> exactly — a reversed connection destroys the ESC and isn't covered under warranty.
+  </div>
+
+  <section class="card">
+    <div class="card-inner">
+      <h2>1. Throttle range calibration</h2>
+      <p class="card-sub">Do this first, with the transmitter — not the program card. It teaches the ESC where "neutral," "full forward," and "full reverse" actually are on your specific transmitter. Redo it any time the ESC or transmitter changes, or if you adjust the throttle trim.</p>
+
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body"><p>Turn on the transmitter first. If it has D/R, EPA, or ATL settings on the throttle channel, set them to 100%, and throttle trim to 0 — skip this if your transmitter is still at factory defaults.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body"><p>With the ESC switched off, hold the <b>SET</b> button and switch the ESC on. The red LED starts flashing (the motor beeps too) — release SET right away. If you don't release it within 3 seconds, the ESC drops into programming mode instead and you'll need to restart from this step.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body"><p>Leave the throttle trigger at neutral and press SET. The green LED flashes once (one beep) — neutral is stored.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body"><p>Pull the trigger to full forward and press SET. Green flashes twice (two beeps) — the forward end point is stored.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body"><p>Push the trigger to full reverse/brake and press SET. Green flashes three times (three beeps) — the reverse end point is stored, and the motor is ready to drive normally.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-inner">
+      <h2>2. Programming with the LED Program Card</h2>
+      <p class="card-sub">This is the card from the shopping list — it replaces the tedious "count the LED blinks" method with buttons and a readout. One card programs both ESCs; it's not a per-car item.</p>
+
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body"><p>With the ESC switched off, connect the ESC's 3-pin throttle/programming cable to the program card's port — match the <b>−</b> and <b>+</b> markings on both ends, they only make sense one way.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body"><p>Power on the ESC. After a couple seconds the card shows the current value of every parameter.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body"><p>Press <b>ITEM</b> to step through the 12 parameters below, <b>VALUE</b> to change the selected one, then <b>OK</b> to save it.</p></div>
+        </div>
+      </div>
+
+      <p class="subhead">The 12 parameters</p>
+      <div class="table-scroll">
+        <table class="param-table">
+          <thead><tr><th>Parameter</th><th>Factory default</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td class="pname">1. Running Mode</td><td class="pdefault">Forward/Reverse with Brake</td><td>Hobbywing's own manual calls this the "training" mode — the car only reverses after it's come to a full stop first, so a stuck or confused throttle input can't suddenly throw it into reverse. Leave it here for a first driver.</td></tr>
+            <tr><td class="pname">2. Cutoff Voltage</td><td class="pdefault">3.0V/cell</td><td>Cuts power once the battery gets too low to protect the LiPo. On the 3S Zeee battery that's a 9.0V total cutoff — a sensible default, no reason to change it.</td></tr>
+            <tr><td class="pname">3. Punch</td><td class="pdefault">Level 7</td><td>How aggressively the motor responds to throttle input. Higher = snappier off the line. Leave at default until you know you want softer starts.</td></tr>
+            <tr><td class="pname">4. Drag Brake Force</td><td class="pdefault">0%</td><td>How much the car brakes on its own when you let off the throttle, like engine braking. 0% means it coasts freely.</td></tr>
+            <tr><td class="pname">5. Max Brake Force</td><td class="pdefault">75%</td><td>How hard the car brakes at full brake-trigger. The manual warns a very high setting can shorten braking time but stress the pinion/spur gears.</td></tr>
+            <tr><td class="pname">6. Max Reverse Force</td><td class="pdefault">25%</td><td>Reverse speed. Hobbywing recommends a smaller value here to avoid mistakes from reversing too quickly — a good one to leave alone for a beginner.</td></tr>
+            <tr><td class="pname">7. Neutral Range</td><td class="pdefault">9%</td><td>How wide the "dead zone" around neutral is. Only worth raising if the car creeps forward/back on its own at rest.</td></tr>
+            <tr><td class="pname">8. Boost Timing</td><td class="pdefault">4°</td><td>Motor timing that scales with throttle input. Affects top-end power. Leave at default — this isn't a race car yet.</td></tr>
+            <tr><td class="pname">9. Turbo Timing</td><td class="pdefault">0°</td><td>Extra timing at full throttle for more top speed. The manual's own caution: it raises current and heat in both the motor and ESC. Leave off (0°) for now.</td></tr>
+            <tr><td class="pname">10. Turbo Delay</td><td class="pdefault">0.2s</td><td>How long you have to hold full throttle before Turbo Timing kicks in. Irrelevant while Turbo Timing is off.</td></tr>
+            <tr><td class="pname">11. BEC Voltage</td><td class="pdefault">6.0V</td><td>Power sent to the servo and receiver. We checked — the Miuzei 25KG servo in this build is rated 4.8–8.4V, so either 6.0V or 7.4V is safe on it, but there's no reason to change the default. <b>Never set this above your servo's rated voltage</b> if you swap servos later.</td></tr>
+            <tr><td class="pname">12. Motor Rotation</td><td class="pdefault">CCW</td><td>Which way the motor spins. Only touch this if the car drives backward from what the throttle trigger says — then flip it to CW instead of re-wiring anything.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-inner">
+      <h2>3. Factory reset</h2>
+      <p class="card-sub">If programming goes sideways, this puts every parameter above back to the defaults in the table.</p>
+      <div class="ledger">
+        <div class="led-dot"></div>
+        <div>With the LED program card connected, press <b>RESET</b>, then press <b>OK</b> to save. Power the ESC off and back on to confirm the defaults took.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var BRAND_KEY = 'wr1-cart:brand';
+  var brandButtons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
+  function applyBrand(b) {
+    document.documentElement.setAttribute('data-brand', b);
+    brandButtons.forEach(function (btn) {
+      var on = btn.getAttribute('data-brand-choice') === b;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try { localStorage.setItem(BRAND_KEY, b); } catch (e) {}
+  }
+  brandButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () { applyBrand(btn.getAttribute('data-brand-choice')); });
+  });
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(BRAND_KEY); } catch (e) {}
+    applyBrand(saved === 'track' ? saved : 'curv');
+  })();
+})();
+</script>
+</body>
+</html>
