@@ -110,6 +110,28 @@
   .learn-more .lm-title { font-weight: 650; color: var(--ink); font-size: 13px; line-height: 1.35; }
   .learn-more .lm-hook { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
 
+  .checkin {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .checkin .ci-label {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--accent); font-weight: 700; margin-bottom: 4px;
+  }
+  .checkin .ci-q { margin: 0; font-weight: 600; color: var(--ink); }
+  .checkin details { margin-top: 8px; }
+  .checkin summary { cursor: pointer; font-weight: 650; color: var(--accent); font-size: 12.5px; list-style: none; }
+  .checkin summary::-webkit-details-marker { display: none; }
+  .checkin summary::before { content: "▸ "; }
+  .checkin details[open] summary::before { content: "▾ "; }
+  .checkin .ci-a { margin: 8px 0 0; color: var(--ink-soft); }
+
   .swap-note {
     background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line));
     border-radius: var(--radius); padding: 14px 16px; font-size: 13px; line-height: 1.6; margin: 24px 0 0;
@@ -138,9 +160,15 @@
 <body>
 
 <nav class="site-nav"><div class="site-nav-inner">
-  <a href="../">Shopping List</a>
-  <a href="./" class="on">Build Guide</a>
-  <a href="../brand/">Brand Guide</a>
+  <div class="site-nav-links">
+    <a href="../">Shopping List</a>
+    <a href="./" class="on">Build Guide</a>
+    <a href="../brand/">Brand Guide</a>
+  </div>
+  <div class="seg brand-seg" role="group" aria-label="Color theme">
+    <button type="button" data-brand-choice="track">Track</button>
+    <button type="button" data-brand-choice="curv">Curv</button>
+  </div>
 </div></nav>
 
 <header class="hero">
@@ -171,6 +199,14 @@
   <div class="swap-note" style="margin-top:12px;">
     <b>Dry your filament before you print anything:</b> we picked up a Sunlu E2 to dry the PETG HF ahead of the print jobs for this build. Wet filament is one of the most common causes of weak, brittle, or delaminating parts — worth doing even if the spool feels fine.
   </div>
+  <a class="learn-more" href="https://www.youtube.com/watch?v=SMIWuBSD_g4" target="_blank" rel="noopener">
+    <img src="https://img.youtube.com/vi/SMIWuBSD_g4/hqdefault.jpg" alt="" loading="lazy">
+    <span>
+      <span class="lm-label">🎥 About this car</span>
+      <span class="lm-title">NEW PROJECT! — WR1 RC Car Preview</span>
+      <span class="lm-hook">CURV LAB's own preview of the WR1, from their channel — see the finished car before you start building it.</span>
+    </span>
+  </a>
   <div class="credit" style="margin:12px 0 0;">
     Worth a browse before you dive in: <b>CURV LAB's own YouTube channel</b>, straight from the guide's "find us on social media" page — build footage and behind-the-scenes from the people who designed this car.
     <div class="credit-links">
@@ -280,6 +316,15 @@
 
       <div class="swap-note">
         <b>Why we skip the soldering iron:</b> the book's method heats a soldering iron to 250–350°F and melts each insert in by hand — hot, slow, and not something a 9-year-old should hold. A press does the same job with squarer, more consistent inserts and no hot tip near little hands. Anywhere the guide calls for the soldering iron and insert tips, use the press instead.
+      </div>
+
+      <div class="checkin">
+        <div class="ci-label">🧠 Quick check</div>
+        <p class="ci-q">Why press a metal insert into the plastic instead of just screwing straight into it?</p>
+        <details>
+          <summary>Show answer</summary>
+          <p class="ci-a">Plastic threads wear out fast — take a screw in and out a few times and the plastic strips, and the screw just spins. A brass insert gives the screw permanent metal threads to bite into instead, so the joint stays tight no matter how many times you take it apart.</p>
+        </details>
       </div>
 
       <div class="complete-row">
@@ -461,6 +506,15 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="checkin">
+        <div class="ci-label">🧠 Quick check</div>
+        <p class="ci-q">When the car turns a corner, does the outside wheel or the inside wheel have to spin faster?</p>
+        <details>
+          <summary>Show answer</summary>
+          <p class="ci-a">The outside wheel — it's tracing a bigger circle, so it has to cover more distance in the same amount of time as the inside wheel. That's the whole reason the differential you just built exists: it lets the two wheels on an axle spin at different speeds instead of forcing them to match.</p>
+        </details>
       </div>
 
       <div class="complete-row">
@@ -830,6 +884,14 @@
           <div class="step-num">4</div>
           <div class="step-body">
             <p>Slide the whole motor assembly into the channels on the Center Diff assembly until the pinion gear's teeth mesh with the center differential.</p>
+            <a class="learn-more" href="https://www.youtube.com/watch?v=sKsDeedtIbA" target="_blank" rel="noopener">
+              <img src="https://img.youtube.com/vi/sKsDeedtIbA/hqdefault.jpg" alt="" loading="lazy">
+              <span>
+                <span class="lm-label">🎥 Further learning</span>
+                <span class="lm-title">RC Overload — How to Mesh Spur and Pinion Gears!</span>
+                <span class="lm-hook">This is the exact interface you're setting right now — how tight or loose two gears' teeth sit against each other, and why it matters.</span>
+              </span>
+            </a>
           </div>
         </div>
 
@@ -840,6 +902,15 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="checkin">
+        <div class="ci-label">🧠 Quick check</div>
+        <p class="ci-q">The motor only spins one way at a fixed speed when it gets power. So how does the ESC give you different speeds — and reverse?</p>
+        <details>
+          <summary>Show answer</summary>
+          <p class="ci-a">The ESC doesn't change how the motor works — it changes how <em>often</em> it gets power. It switches the power on and off thousands of times a second (called PWM, "pulse width modulation"); more on-time per pulse means more average power, so the motor spins faster. For reverse, the ESC swaps which two wires get power, which flips the direction the motor turns.</p>
+        </details>
       </div>
 
       <div class="complete-row">
@@ -1588,6 +1659,26 @@
       paint();
     });
   });
+
+  var BRAND_KEY = 'wr1-cart:brand';
+  var brandButtons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
+  function applyBrand(b) {
+    document.documentElement.setAttribute('data-brand', b);
+    brandButtons.forEach(function (btn) {
+      var on = btn.getAttribute('data-brand-choice') === b;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try { localStorage.setItem(BRAND_KEY, b); } catch (e) {}
+  }
+  brandButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () { applyBrand(btn.getAttribute('data-brand-choice')); });
+  });
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(BRAND_KEY); } catch (e) {}
+    applyBrand(saved === 'curv' ? saved : 'track');
+  })();
 })();
 </script>
 

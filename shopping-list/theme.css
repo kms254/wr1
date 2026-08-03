@@ -116,16 +116,24 @@ a { color: var(--accent); }
 
 /* ---- Shared site tabs (Shopping List / Build Guide / Brand Guide) ---- */
 .site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   border-bottom: 1px solid var(--line);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: blur(8px);
 }
 .site-nav-inner {
   max-width: 1040px;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
 }
+.site-nav-links { display: flex; gap: 4px; }
 .site-nav a {
   display: inline-block;
   padding: 12px 14px;
@@ -138,3 +146,13 @@ a { color: var(--accent); }
 }
 .site-nav a:hover { color: var(--ink); }
 .site-nav a.on { color: var(--accent); border-bottom-color: var(--accent); }
+
+.site-nav .brand-seg { margin: 8px 0; }
+.site-nav .seg { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--paper); }
+.site-nav .seg button {
+  font: inherit; font-size: 12px; padding: 5px 12px; border: 0; border-right: 1px solid var(--line);
+  background: none; color: var(--ink-soft); cursor: pointer; white-space: nowrap;
+}
+.site-nav .seg button:last-child { border-right: 0; }
+.site-nav .seg button:hover { color: var(--accent); }
+.site-nav .seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 650; }

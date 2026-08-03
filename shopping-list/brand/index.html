@@ -21,19 +21,7 @@
   .sub { color: var(--ink-soft); font-size: 15px; max-width: 66ch; margin: 0; }
   .sub a { font-weight: 600; }
 
-  /* ---- Live switcher ---- */
-  .switcher-bar {
-    position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-    margin-top: 28px;
-  }
-  .switcher-inner {
-    max-width: 1040px; margin: 0 auto; padding: 12px 20px;
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  }
-  .switcher-label { font-size: 12px; color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+  /* ---- Segmented control (also used live by the brand switcher in .site-nav) ---- */
   .seg { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
   .seg button {
     font: inherit; font-size: 12px; padding: 6px 14px; border: 0; border-right: 1px solid var(--line);
@@ -42,8 +30,6 @@
   .seg button:last-child { border-right: 0; }
   .seg button:hover { color: var(--accent); }
   .seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 650; }
-  .switcher-note { font-size: 12px; color: var(--ink-soft); }
-
   /* ---- Sections ---- */
   section.block { margin-top: 48px; }
   .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
@@ -122,27 +108,22 @@
 <body>
 
 <nav class="site-nav"><div class="site-nav-inner">
-  <a href="../">Shopping List</a>
-  <a href="../build/">Build Guide</a>
-  <a href="./" class="on">Brand Guide</a>
+  <div class="site-nav-links">
+    <a href="../">Shopping List</a>
+    <a href="../build/">Build Guide</a>
+    <a href="./" class="on">Brand Guide</a>
+  </div>
+  <div class="seg brand-seg" role="group" aria-label="Color theme">
+    <button type="button" data-brand-choice="track">Track</button>
+    <button type="button" data-brand-choice="curv">Curv</button>
+  </div>
 </div></nav>
 
 <header class="hero">
   <p class="eyebrow">WR1 · CURV LAB Chassis Build</p>
   <h1>Brand Guide</h1>
-  <p class="sub">Two color systems for the WR1 tools in this repo, both built from the same eleven-token structure — pick one below to see it live in the type and component sections. Written version with rationale: <a href="https://github.com/kms254/wr1/blob/main/BRANDING.md" target="_blank" rel="noopener">BRANDING.md</a>.</p>
+  <p class="sub">Two color systems for the WR1 tools in this repo, both built from the same eleven-token structure — pick one in the menu above to see it live in the type and component sections below. Written version with rationale: <a href="https://github.com/kms254/wr1/blob/main/BRANDING.md" target="_blank" rel="noopener">BRANDING.md</a>.</p>
 </header>
-
-<div class="switcher-bar">
-  <div class="switcher-inner">
-    <span class="switcher-label">Preview brand:</span>
-    <div class="seg" role="group" aria-label="Color theme">
-      <button type="button" data-brand-choice="track">Track</button>
-      <button type="button" data-brand-choice="curv">Curv</button>
-    </div>
-    <span class="switcher-note">Follows your OS light/dark setting. Saved choice is shared with the <a href="../">shopping list</a>.</span>
-  </div>
-</div>
 
 <div class="wrap">
 
@@ -261,7 +242,7 @@
 (function () {
   'use strict';
   var KEY = 'wr1-cart:brand';
-  var buttons = Array.prototype.slice.call(document.querySelectorAll('.switcher-bar .seg button'));
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.brand-seg button'));
   var fontReadout = document.getElementById('font-readout');
   var FONTS = {
     track: 'ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif',
