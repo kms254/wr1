@@ -132,6 +132,35 @@
   .checkin details[open] summary::before { content: "▾ "; }
   .checkin .ci-a { margin: 8px 0 0; color: var(--ink-soft); }
 
+  /* ---- Multiple choice / true-false: click an option for instant feedback ---- */
+  .mc-options { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .mc-opt {
+    text-align: left; font: inherit; font-size: 12.5px; padding: 8px 11px;
+    border: 1px solid var(--line); background: var(--paper); border-radius: 8px;
+    cursor: pointer; color: var(--ink);
+  }
+  .mc-opt:hover:not(:disabled) { border-color: var(--accent); }
+  .mc-opt.correct { border-color: var(--good); background: var(--good-soft); color: var(--good); font-weight: 650; }
+  .mc-opt.wrong { border-color: var(--warn); background: var(--warn-soft); color: var(--warn); }
+  .mc-opt:disabled { cursor: default; }
+  .mc-explain { margin: 10px 0 0; color: var(--ink-soft); display: none; }
+  .mc-explain.show { display: block; }
+
+  /* ---- Card matching: click a term, then its match ---- */
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 10px; margin-top: 10px; }
+  .match-item {
+    font: inherit; font-size: 12px; padding: 9px 11px; border: 1px solid var(--line);
+    background: var(--paper); border-radius: 8px; cursor: pointer; color: var(--ink);
+    text-align: left; width: 100%; margin-bottom: 6px;
+  }
+  .match-item:last-child { margin-bottom: 0; }
+  .match-item:hover:not(.matched) { border-color: var(--accent); }
+  .match-item.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .match-item.matched { border-color: var(--good); background: var(--good-soft); color: var(--good); font-weight: 650; cursor: default; }
+  .match-item.wrong { border-color: var(--warn); background: var(--warn-soft); }
+  .match-status { margin: 10px 0 0; font-weight: 650; color: var(--good); font-size: 13px; display: none; }
+  .match-status.show { display: block; }
+
   .swap-note {
     background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line));
     border-radius: var(--radius); padding: 14px 16px; font-size: 13px; line-height: 1.6; margin: 24px 0 0;
@@ -198,6 +227,32 @@
   </a>
   <div class="swap-note" style="margin-top:12px;">
     <b>Dry your filament before you print anything:</b> we picked up a Sunlu E2 to dry the PETG HF ahead of the print jobs for this build. Wet filament is one of the most common causes of weak, brittle, or delaminating parts — worth doing even if the spool feels fine.
+  </div>
+  <a class="learn-more" href="https://www.youtube.com/watch?v=G8qhgOUPQCk" target="_blank" rel="noopener">
+    <img src="https://img.youtube.com/vi/G8qhgOUPQCk/hqdefault.jpg" alt="" loading="lazy">
+    <span>
+      <span class="lm-label">🎥 Why PETG-HF</span>
+      <span class="lm-title">The End of PLA? Testing the "New" PETG</span>
+      <span class="lm-hook">Covers PETG HF specifically — why it holds up to impacts and heat so much better than PLA, which is exactly why the guide calls for it on parts that take real hits.</span>
+    </span>
+  </a>
+  <a class="learn-more" href="https://www.youtube.com/watch?v=3FllK6S09Gk" target="_blank" rel="noopener">
+    <img src="https://img.youtube.com/vi/3FllK6S09Gk/hqdefault.jpg" alt="" loading="lazy">
+    <span>
+      <span class="lm-label">🎥 Further learning</span>
+      <span class="lm-title">Why You Should Dry PETG Before Printing (Even Brand New Rolls)</span>
+      <span class="lm-hook">Couldn't find a CURV LAB video specifically on drying, so this is a solid third-party one instead — goes deeper on why the note above matters.</span>
+    </span>
+  </a>
+  <div class="checkin mc-quiz">
+    <div class="ci-label">🧠 Multiple choice</div>
+    <p class="ci-q">Why does PETG soak up water from the air in the first place?</p>
+    <div class="mc-options">
+      <button class="mc-opt" data-correct="false">It's magnetic and attracts water molecules</button>
+      <button class="mc-opt" data-correct="true">It's hygroscopic — its chemistry naturally pulls moisture out of the air</button>
+      <button class="mc-opt" data-correct="false">It only happens if the spool gets rained on</button>
+    </div>
+    <p class="mc-explain">PETG is hygroscopic, meaning it chemically attracts and holds onto water vapor right out of the open air — no rain or spills needed, just time sitting on a shelf. That absorbed moisture turns to steam the instant it hits the hot nozzle, which is what causes the weak, bubbly, snap-prone prints drying fixes.</p>
   </div>
   <a class="learn-more" href="https://www.youtube.com/watch?v=SMIWuBSD_g4" target="_blank" rel="noopener">
     <img src="https://img.youtube.com/vi/SMIWuBSD_g4/hqdefault.jpg" alt="" loading="lazy">
@@ -415,6 +470,16 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="checkin mc-quiz">
+        <div class="ci-label">🧠 True or false</div>
+        <p class="ci-q">It doesn't matter which way the Steering Washer's flange side faces when you install it.</p>
+        <div class="mc-options">
+          <button class="mc-opt" data-correct="false">True</button>
+          <button class="mc-opt" data-correct="true">False</button>
+        </div>
+        <p class="mc-explain">False — the guide is specific that the flange side faces down. Getting it backwards usually still "fits," which is exactly what makes this mistake easy to miss until the steering feels wrong later.</p>
       </div>
 
       <div class="complete-row">
@@ -800,6 +865,17 @@
 
       </div>
 
+      <div class="checkin mc-quiz">
+        <div class="ci-label">🧠 Multiple choice</div>
+        <p class="ci-q">This session uses both glue AND threadlocker on different joints. What's the actual difference?</p>
+        <div class="mc-options">
+          <button class="mc-opt" data-correct="false">They're the same thing, just different bottles</button>
+          <button class="mc-opt" data-correct="true">Glue bonds two plastic parts permanently; threadlocker keeps a metal screw from vibrating loose, but the screw can still be removed</button>
+          <button class="mc-opt" data-correct="false">Threadlocker is just a stronger version of glue</button>
+        </div>
+        <p class="mc-explain">Glue (like the plastic cement bonding the two bracket halves here) is meant to be permanent — those two parts are one part now. Threadlocker is a thin coating on screw threads that resists vibration, but a screwdriver still backs the screw straight out whenever you need it to.</p>
+      </div>
+
       <div class="complete-row">
         <input type="checkbox" id="session-6-done">
         <label for="session-6-done">Mark Session 6 complete</label>
@@ -956,7 +1032,25 @@
               <img src="images/servo-mount.png" alt="Official guide diagram showing the servo arm attached, then the servo fastened to the Chassis Plate" loading="lazy">
               <figcaption>From the official guide (steps 20.1–20.2).</figcaption>
             </figure>
+            <a class="learn-more" href="https://www.youtube.com/watch?v=8jFe2ygIFss" target="_blank" rel="noopener">
+              <img src="https://img.youtube.com/vi/8jFe2ygIFss/hqdefault.jpg" alt="" loading="lazy">
+              <span>
+                <span class="lm-label">🎥 Further learning</span>
+                <span class="lm-title">RC Servos: What's Inside and How Servo Works?</span>
+                <span class="lm-hook">The part you're holding right now, opened up — a little motor, gears, and a sensor working together to hold an exact position instead of just spinning.</span>
+              </span>
+            </a>
           </div>
+        </div>
+
+        <div class="checkin mc-quiz">
+          <div class="ci-label">🧠 True or false</div>
+          <p class="ci-q">A servo can spin forever in one direction, just like the drive motor.</p>
+          <div class="mc-options">
+            <button class="mc-opt" data-correct="false">True</button>
+            <button class="mc-opt" data-correct="true">False</button>
+          </div>
+          <p class="mc-explain">False — a servo only turns to a specific position and holds it, usually across less than one full rotation. That's exactly what steering needs: not "spin forever," but "point exactly this many degrees left or right and stay there."</p>
         </div>
 
         <div class="step">
@@ -1255,6 +1349,17 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="checkin mc-quiz">
+        <div class="ci-label">🧠 Multiple choice</div>
+        <p class="ci-q">You've pressed bearings into nearly every knuckle and diff case in this build. What's a bearing actually doing?</p>
+        <div class="mc-options">
+          <button class="mc-opt" data-correct="false">Making the part stronger, like a reinforcement ring</button>
+          <button class="mc-opt" data-correct="true">Letting the shaft spin inside the hole with almost no friction, instead of metal grinding on plastic</button>
+          <button class="mc-opt" data-correct="false">Sealing the hole to keep dirt out</button>
+        </div>
+        <p class="mc-explain">Without a bearing, a spinning axle would just be metal rubbing directly against plastic — slow, hot, and it would wear the hole out fast. A bearing has its own tiny rolling balls inside, so the axle rolls smoothly instead of scraping.</p>
       </div>
 
       <div class="complete-row">
@@ -1597,6 +1702,26 @@
 
       </div>
 
+      <div class="checkin match-quiz">
+        <div class="ci-label">🧠 Match it up</div>
+        <p class="ci-q">You just wired in all four — match each one to its job. Click one on the left, then its match on the right.</p>
+        <div class="match-grid">
+          <div class="match-col">
+            <button class="match-item" data-pair="1">ESC</button>
+            <button class="match-item" data-pair="2">Receiver</button>
+            <button class="match-item" data-pair="3">Servo</button>
+            <button class="match-item" data-pair="4">Battery</button>
+          </div>
+          <div class="match-col">
+            <button class="match-item" data-pair="3">Turns to an exact angle to steer the wheels</button>
+            <button class="match-item" data-pair="1">Controls how much power reaches the motor</button>
+            <button class="match-item" data-pair="4">Stores the electrical energy that powers everything</button>
+            <button class="match-item" data-pair="2">Picks up the signal from your controller</button>
+          </div>
+        </div>
+        <p class="match-status">🎉 All matched! That's the whole electrical system, start to finish.</p>
+      </div>
+
       <div class="complete-row">
         <input type="checkbox" id="session-15-done">
         <label for="session-15-done">Mark Session 15 complete</label>
@@ -1692,6 +1817,57 @@
         else localStorage.removeItem(key);
       } catch (e) {}
       paint();
+    });
+  });
+
+  document.querySelectorAll('.mc-quiz').forEach(function (quiz) {
+    var opts = Array.prototype.slice.call(quiz.querySelectorAll('.mc-opt'));
+    var explain = quiz.querySelector('.mc-explain');
+    opts.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        opts.forEach(function (o) {
+          o.disabled = true;
+          if (o.getAttribute('data-correct') === 'true') o.classList.add('correct');
+        });
+        if (opt.getAttribute('data-correct') !== 'true') opt.classList.add('wrong');
+        if (explain) explain.classList.add('show');
+      });
+    });
+  });
+
+  document.querySelectorAll('.match-quiz').forEach(function (quiz) {
+    var selected = null;
+    var status = quiz.querySelector('.match-status');
+    quiz.querySelectorAll('.match-item').forEach(function (item) {
+      item.addEventListener('click', function () {
+        if (item.classList.contains('matched')) return;
+        if (!selected) { selected = item; item.classList.add('selected'); return; }
+        if (selected === item) { selected.classList.remove('selected'); selected = null; return; }
+        if (selected.parentElement === item.parentElement) {
+          selected.classList.remove('selected');
+          selected = item;
+          item.classList.add('selected');
+          return;
+        }
+        if (selected.getAttribute('data-pair') === item.getAttribute('data-pair')) {
+          selected.classList.remove('selected');
+          selected.classList.add('matched');
+          item.classList.add('matched');
+          selected = null;
+          var allDone = Array.prototype.every.call(quiz.querySelectorAll('.match-item'), function (el) {
+            return el.classList.contains('matched');
+          });
+          if (allDone && status) status.classList.add('show');
+        } else {
+          var a = selected, b = item;
+          a.classList.add('wrong'); b.classList.add('wrong');
+          selected = null;
+          setTimeout(function () {
+            a.classList.remove('wrong', 'selected');
+            b.classList.remove('wrong');
+          }, 500);
+        }
+      });
     });
   });
 
