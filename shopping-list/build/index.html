@@ -146,7 +146,7 @@
 <header class="hero">
   <p class="eyebrow">WR1 · CURV LAB Chassis Build</p>
   <h1>Build Guide</h1>
-  <p class="sub">The official 67-page assembly guide, reorganized into roughly 30-minute sessions sized for a 9-year-old with a grown-up's help — and re-sequenced around an <b>insert press</b> instead of the soldering iron the book calls for. One session live so far; more coming after this one.</p>
+  <p class="sub">The official 67-page assembly guide, reorganized into 16 sessions of roughly 30 minutes each, sized for a 9-year-old with a grown-up's help — and re-sequenced around an <b>insert press</b> instead of the soldering iron the book calls for. Every insert-pressing step across the whole build now happens before the fastening that follows it, not mixed in partway through. Session 16 (FPV) is optional; everything else gets you a driveable car.</p>
 </header>
 
 <div class="credit">
@@ -1454,6 +1454,10 @@
           <div class="step-num">5</div>
           <div class="step-body">
             <p>Stick the receiver to the chassis with foam tape, near where its wires from the servo and ESC will reach.</p>
+            <figure class="step-fig">
+              <img src="images/receiver-mount.png" alt="Official guide diagram showing where to stick the receiver on the chassis plate, viewed from underneath" loading="lazy">
+              <figcaption>From the official guide (step 43.1).</figcaption>
+            </figure>
           </div>
         </div>
 
@@ -1469,6 +1473,65 @@
       <div class="complete-row">
         <input type="checkbox" id="session-15-done">
         <label for="session-15-done">Mark Session 15 complete</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="session" id="session-16">
+    <div class="session-card" id="session-16-card">
+      <div class="session-head">
+        <h2>Session 16 — FPV Mount (Optional)</h2>
+      </div>
+      <div class="session-meta">
+        <span>⏱ <b>~30 min</b></span>
+        <span>👤 <b>Kid-led</b></span>
+        <span>🛠 <b>Small screwdriver</b> (M2 screws are tiny)</span>
+      </div>
+
+      <div class="consolidation-note">
+        <b>Skip this session entirely</b> unless you're mounting the FPV camera — the chassis is fully done and driveable without it. No inserts, just small screws.
+      </div>
+
+      <p class="subhead">What you need</p>
+      <div class="materials">
+        <div class="material"><div class="m-name">Moonlight 4K Camera FPV Kit</div><div class="m-qty">off-the-shelf, optional</div></div>
+        <div class="material"><div class="m-name">M2 × 6mm fastener</div><div class="m-qty">qty 4 · gimbal to baseplate</div></div>
+        <div class="material"><div class="m-name">M3 × 12mm fastener</div><div class="m-qty">qty 2 · baseplate to chassis beam</div></div>
+      </div>
+
+      <p class="subhead">Steps</p>
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p>Mount the GM3 Gimbal to its Baseplate using the 4 tiny M2×6mm screws — go slow, these strip easily if overtightened.</p>
+            <figure class="step-fig">
+              <img src="images/gimbal-mount.png" alt="Official guide diagram showing the GM3 gimbal camera mounted to its baseplate" loading="lazy">
+              <figcaption>From the official guide (step 44.1).</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p>Mount the whole gimbal assembly to the Chassis Beam using 2 M3×12mm screws — this is why the guide's v2 Chassis Beam has those extra holes.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p>Download the camera/gimbal/headset firmware and setup instructions from CaddX before your first flight-view drive: <a href="https://www.caddxfpv.com/pages/download-center" target="_blank" rel="noopener">caddxfpv.com/pages/download-center</a>.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="complete-row">
+        <input type="checkbox" id="session-16-done">
+        <label for="session-16-done">Mark Session 16 complete</label>
       </div>
     </div>
   </section>
