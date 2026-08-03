@@ -161,6 +161,22 @@
   .match-status { margin: 10px 0 0; font-weight: 650; color: var(--good); font-size: 13px; display: none; }
   .match-status.show { display: block; }
 
+  .quiz-reset {
+    display: none;
+    margin: 12px 0 0;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 650;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .quiz-reset:hover { border-color: var(--accent); color: var(--accent); }
+  .quiz-reset.show { display: inline-block; }
+
   .swap-note {
     background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line));
     border-radius: var(--radius); padding: 14px 16px; font-size: 13px; line-height: 1.6; margin: 24px 0 0;
@@ -524,6 +540,14 @@
               <img src="images/center-diff-install.png" alt="Official guide diagram showing the center differential filled with fluid and dropped into the chassis plate's bearing cradles" loading="lazy">
               <figcaption>From the official guide (steps 5.1–5.2).</figcaption>
             </figure>
+            <a class="learn-more" href="https://www.youtube.com/watch?v=4niuFZZvoVM" target="_blank" rel="noopener">
+              <img src="https://img.youtube.com/vi/4niuFZZvoVM/hqdefault.jpg" alt="" loading="lazy">
+              <span>
+                <span class="lm-label">🎥 Further learning</span>
+                <span class="lm-title">Threadlockers (Loctite etc.) Explained</span>
+                <span class="lm-hook">This is the first of several times you'll dab threadlocker on a screw in this build — a quick look at what's actually in that little bottle and why a plain screw can shake loose without it.</span>
+              </span>
+            </a>
           </div>
         </div>
 
@@ -1450,6 +1474,15 @@
         </details>
       </div>
 
+      <a class="learn-more" href="https://www.youtube.com/watch?v=sF-PfAu50Fo" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/sF-PfAu50Fo/hqdefault.jpg" alt="" loading="lazy">
+        <span>
+          <span class="lm-label">🎥 Further learning</span>
+          <span class="lm-title">Hemant Patil — What is Ackerman Steering Mechanism? (Simple Explanation with Animations)</span>
+          <span class="lm-hook">Watch the animation of why the inside wheel has to turn sharper than the outside one — the exact thing you just checked by hand on the steering rack.</span>
+        </span>
+      </a>
+
       <div class="complete-row">
         <input type="checkbox" id="session-12-done">
         <label for="session-12-done">Mark Session 12 complete</label>
@@ -1831,6 +1864,19 @@
   document.querySelectorAll('.mc-quiz').forEach(function (quiz) {
     var opts = Array.prototype.slice.call(quiz.querySelectorAll('.mc-opt'));
     var explain = quiz.querySelector('.mc-explain');
+    var resetBtn = document.createElement('button');
+    resetBtn.type = 'button';
+    resetBtn.className = 'quiz-reset';
+    resetBtn.textContent = '🔄 Try again';
+    quiz.appendChild(resetBtn);
+
+    function resetQuiz() {
+      opts.forEach(function (o) { o.disabled = false; o.classList.remove('correct', 'wrong'); });
+      if (explain) explain.classList.remove('show');
+      resetBtn.classList.remove('show');
+    }
+    resetBtn.addEventListener('click', resetQuiz);
+
     opts.forEach(function (opt) {
       opt.addEventListener('click', function () {
         opts.forEach(function (o) {
@@ -1839,21 +1885,35 @@
         });
         if (opt.getAttribute('data-correct') !== 'true') opt.classList.add('wrong');
         if (explain) explain.classList.add('show');
+        resetBtn.classList.add('show');
       });
     });
   });
 
   document.querySelectorAll('.match-quiz').forEach(function (quiz) {
-    var selected = null;
+    var state = { selected: null };
     var status = quiz.querySelector('.match-status');
-    quiz.querySelectorAll('.match-item').forEach(function (item) {
+    var items = Array.prototype.slice.call(quiz.querySelectorAll('.match-item'));
+    var resetBtn = document.createElement('button');
+    resetBtn.type = 'button';
+    resetBtn.className = 'quiz-reset show';
+    resetBtn.textContent = '🔄 Reset';
+    quiz.appendChild(resetBtn);
+    resetBtn.addEventListener('click', function () {
+      state.selected = null;
+      items.forEach(function (el) { el.classList.remove('matched', 'selected', 'wrong'); });
+      if (status) status.classList.remove('show');
+    });
+
+    items.forEach(function (item) {
       item.addEventListener('click', function () {
+        var selected = state.selected;
         if (item.classList.contains('matched')) return;
-        if (!selected) { selected = item; item.classList.add('selected'); return; }
-        if (selected === item) { selected.classList.remove('selected'); selected = null; return; }
+        if (!selected) { state.selected = item; item.classList.add('selected'); return; }
+        if (selected === item) { selected.classList.remove('selected'); state.selected = null; return; }
         if (selected.parentElement === item.parentElement) {
           selected.classList.remove('selected');
-          selected = item;
+          state.selected = item;
           item.classList.add('selected');
           return;
         }
@@ -1861,15 +1921,13 @@
           selected.classList.remove('selected');
           selected.classList.add('matched');
           item.classList.add('matched');
-          selected = null;
-          var allDone = Array.prototype.every.call(quiz.querySelectorAll('.match-item'), function (el) {
-            return el.classList.contains('matched');
-          });
+          state.selected = null;
+          var allDone = items.every(function (el) { return el.classList.contains('matched'); });
           if (allDone && status) status.classList.add('show');
         } else {
           var a = selected, b = item;
           a.classList.add('wrong'); b.classList.add('wrong');
-          selected = null;
+          state.selected = null;
           setTimeout(function () {
             a.classList.remove('wrong', 'selected');
             b.classList.remove('wrong');
